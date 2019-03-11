@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SmartHome</string>
+    <string name="title_home">Wohnzimmer</string>
+    <string name="title_dashboard">Schlafzimmer</string>
+    <string name="title_notifications">Arbeit</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="auth_failed">User signIn failed. Try it again.</string>
+    <string name="minimum_password">Password to short.</string>
+
+    <string name="defaultwertmsg"> Bitte die Standardeinstellungen über die Webinterface einstellen.</string>
+
+
+</resources>

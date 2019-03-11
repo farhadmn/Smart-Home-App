@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<senSoMod:Modell xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senSoMod="http://www.example.org/senSoMod">
+  <node xsi:type="senSoMod:Context" name="bedroom" description="" contextdescription="//@node.2 //@node.9 //@node.31 //@node.32">
+    <decisionlogic name="If ( location==at home &amp;&amp; sensor=licht ) then (room=&quot;bedroom&quot;)&#xD;&#xA;else (room=&quot;unknown&quot; "/>
+    <output name="">
+      <type name="Name" type="String">
+        <element name="bedroom" type="String"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 1" description="location=at work">
+    <contextexpression name="location=at work"/>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 2" description="location=at home &amp;&amp;room=bedroom">
+    <contextexpression name="location=at home &amp;&amp;room=bedroom"/>
+  </node>
+  <node xsi:type="senSoMod:Context" name="location" contextdescription="//@node.1 //@node.6 //@node.2 //@node.4">
+    <decisionlogic name="If (routerName==&quot;eduroam&quot;) || log==12.19 &amp;&amp; lat==48.55) then (location =&quot;at work&quot;)&#xD;&#xA;If (routerName==&quot;TP-Link-F2FFCC&quot;) || log==12.18&amp;&amp; lat==48.54) then (location =&quot;at home&quot;)&#xD;&#xA;else (location=&quot;unknown&quot;)"/>
+    <output name="">
+      <type name="Building" type=" Enum">
+        <element name="At Work" type="Sting"/>
+        <element name="At Home" type="String"/>
+        <element name="unknown" type="String"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 3" description="location=at home &amp;&amp; room&amp;living room">
+    <contextexpression name="location=at home &amp;&amp; room&amp;living room"/>
+  </node>
+  <node xsi:type="senSoMod:VirtualSensor" name="Location-DB" context="//@node.3">
+    <output name="">
+      <type name="Building" type="Enum">
+        <element name="location" type="String"/>
+        <element name="long" type="Double"/>
+        <element name="Router" type="String"/>
+        <element name="lat" type="double"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 4" description="location=unknown">
+    <contextexpression name="location=unknown"/>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Wifi" context="//@node.3">
+    <output>
+      <type name="Router" type="Object">
+        <element name="Routername" type="String"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="GPS" context="//@node.3">
+    <output>
+      <type name="Position" type="Object">
+        <element name="long" type="double"/>
+        <element name="long" type="double"/>
+        <element name="long" type="double"/>
+        <element name="lat" type="double"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 5" description="room=unknown">
+    <contextexpression name="room=unknown"/>
+  </node>
+  <node xsi:type="senSoMod:Context" name="living room" contextdescription="//@node.4 //@node.9">
+    <decisionlogic name="If ( location==at home &amp;&amp; sensor=tv ) then (room=&quot;living room&quot;)&#xD;&#xA;else (room=&quot;unknown&quot; "/>
+    <output>
+      <type name="Name" type="String">
+        <element name="living room" type="string"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:Context" name="at work" contextdescription="//@node.1 //@node.27 //@node.33">
+    <decisionlogic name="if (Drucker.Status== &quot;Papier leer&quot;) {&#xD;&#xA;at work= &quot;kein Papier&quot;}"/>
+    <output>
+      <type name="Name" type="String">
+        <element name="at work" type="String"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Licht" context="//@node.0">
+    <output>
+      <type name="LED" type="Object">
+        <element name="Status" type="int"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Steckdose" context="//@node.0">
+    <output>
+      <type name="Steckdose" type="Object">
+        <element name="Status" type="int"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:VirtualSensor" name="Timer Steckdose" context="//@node.0">
+    <output>
+      <type name="Timer" type="Object">
+        <element name="countdowner" type="double"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Jalousien" context="//@node.0">
+    <output>
+      <type name="Jalousin" type="object">
+        <element name="status" type="int"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Alarmanlage" context="//@node.0 //@node.10">
+    <output>
+      <type name="Alarmalage" type="object">
+        <element name="status" type="int"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:ComputedSensor" name="Kleidungsvorschlag" context="//@node.0">
+    <output>
+      <type name="Vorschlag" type="Enum">
+        <element name="Vorschlag" type="String"/>
+      </type>
+    </output>
+    <decisionlogic name="if ( Wetter= &quot;regen&quot;) {&#xD;&#xA;Vorschlag= &quot;Regenbekleidung&quot;&#xD;&#xA;}&#xD;&#xA;if (Wetter =&quot;Schnee&quot;) {&#xD;&#xA;Vorschlag= &quot;Winterbekleidung&quot; }&#xD;&#xA;if (Wetter= &quot;Sonne&quot;  &amp;&amp; Temperatur &lt;= 5.0) {&#xD;&#xA;Vorschlag=&quot; Herbstlook&quot;}&#xD;&#xA;if (Wetter= &quot;Sonne&quot;  &amp;&amp; Temperatur >= 25.0) {&#xD;&#xA;Vorschlag=&quot; Sommerbekleidung&quot;}&#xD;&#xA;"/>
+  </node>
+  <node xsi:type="senSoMod:VirtualSensor" name="Wetter_Kleidungsvorschlag" computedsensor="//@node.17">
+    <output>
+      <type name="Wetter" type="object">
+        <element name="Regen" type="String"/>
+        <element name="Schnee" type="String"/>
+        <element name="Sonne" type="String"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="TV" context="//@node.10">
+    <output>
+      <type name="TV" type="Object">
+        <element name="status" type="int"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Thermometer_Kleidungsvorschlag" computedsensor="//@node.17">
+    <output>
+      <type name="Thermometer" type="object">
+        <element name="Temperatur" type="double"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:ComputedSensor" name="Heizungssteuerung" context="//@node.10">
+    <output>
+      <type name="Stufen" type="int">
+        <element name="Stufe" type="double"/>
+      </type>
+    </output>
+    <decisionlogic name="If (location==&quot;unkown&quot; || location=&quot; at work&quot;) {&#xD;&#xA;Stufe= 0.0;&#xD;&#xA;}&#xD;&#xA;if (temperatur >= 21) {&#xD;&#xA;Stufe=3.0}&#xD;&#xA;if (temperatur &lt; 21) {&#xD;&#xA;Stufe=3.5}"/>
+  </node>
+  <node xsi:type="senSoMod:ComputedSensor" name="Drucker" context="//@node.11">
+    <output>
+      <type name="Status" type="String">
+        <element name="Status" type="String"/>
+      </type>
+    </output>
+    <decisionlogic name="if (Papierzähler.stand==150) {status=&quot;Papier leer&quot;}&#xD;&#xA;&#xD;&#xA;if (Papierzähler.stand==0) {status=&quot;Papier voll&quot;}&#xD;&#xA;if (Farbstandzähler.stand==0 ) { status= &quot;Farbstand voll&quot;}&#xD;&#xA;"/>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Papierstand" computedsensor="//@node.22">
+    <output>
+      <type name="Papierzähler" type="object">
+        <element name="Stand" type="int"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Farbstand" computedsensor="//@node.22">
+    <output>
+      <type name="Farbstandzähler" type="object">
+        <element name="Stand" type="int"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:Context" name="appointment" contextdescription="//@node.28 //@node.29">
+    <decisionlogic name="if(calenderEntry.Date== today) {&#xD;&#xA;appointment= &quot;Metting&quot; }&#xD;&#xA;else  {&#xD;&#xA;appointment=&quot;none&quot;}"/>
+    <output>
+      <type name="state" type="Enum">
+        <element name="Meeting" type="String"/>
+        <element name="None" type="String"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Calendar" description="Object" context="//@node.25">
+    <output>
+      <type name="Entry" type="Object">
+        <element name="Name" type="String"/>
+        <element name="Datum" type="date"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 9" description="Location= at work &amp;&amp; appoinment=meeting">
+    <contextexpression name="Location= at work &amp;&amp; appoinment=meeting"/>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 10" description="Location= at work &amp;&amp; appoinment=free">
+    <contextexpression name="Location= at work &amp;&amp; appoinment=free"/>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 11" description="Location= at work &amp;&amp; appoinment=meeting">
+    <contextexpression name="Location= at work &amp;&amp; appoinment=meeting"/>
+  </node>
+  <node xsi:type="senSoMod:PhysicalSensor" name="Raum_Thermometer" computedsensor="//@node.21">
+    <output>
+      <type name="Raumtemperatur" type="object">
+        <element name="Temperatur" type="double"/>
+      </type>
+    </output>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 6" description="licht=aus">
+    <contextexpression name="Licht= aus"/>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 7" description="licht=an">
+    <contextexpression name="Licht= an"/>
+  </node>
+  <node xsi:type="senSoMod:ContextDescription" name="CE 8" description="drucker=kein papier">
+    <contextexpression name="Drucker= kein Papier"/>
+  </node>
+</senSoMod:Modell>
