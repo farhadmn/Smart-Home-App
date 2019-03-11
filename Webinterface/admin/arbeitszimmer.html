@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+
+<link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+
+
+
+<ul>
+
+  <li><a  href="index.html">Home</a></li>
+
+  <li><a href="schlafzimmer.html">Schlafzimmer</a></li>
+
+  <li><a  href="wohnzimmer.html">Wohnzimmer</a></li>
+
+  <li><a class="active" href="arbeitszimmer.html">Arbeit</a></li>
+
+  <li class="dropdown">
+
+    <a   href="#" >Voreinstellungen</a>
+
+    <div class="dropdown-content">
+
+      <a href="setting_schlafzimmer.html">Schlafzimmer</a>
+
+      <a href="setting_wohnzimmer.html">Wohnzimmer</a>
+
+      <a href="setting_arbeitszimmer.html">Arbeit</a>
+
+       <li><a href="#" onClick="logout();">Abmelden</a></li>
+  </li>
+
+</ul>
+
+
+
+
+
+<div>
+
+
+
+<h2 align="center"> Office </h2>
+
+<h3 align="center" id="saveok">  </h3>
+<table width="200" align="center" cellpadding="20">
+  <tr>
+    <td>&nbsp;</td>
+    <td><p id="test"> </p></td>
+  </tr>
+  <tr>
+    <td>Druckerstatus</td>
+    <td><select name="drucker" id="drucker" onChange="updateDruckerStatus()">
+      <option value="normal">normal</option>
+      <option value="Papierleer">Papier-Leer</option>
+      <option value="tonerleer">Toner-Leer</option>
+    </select></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right"></td>
+  </tr>
+</table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+
+<script src="js/index.js"></script>
+
+<script src="js/office.js"></script>
+
+
+
+
+
+</body>
+
+</html>
+

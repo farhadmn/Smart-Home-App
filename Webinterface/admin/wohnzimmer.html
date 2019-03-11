@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+<!--include CSS-->
+
+<link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+
+<!--Menu start-->
+
+<ul>
+
+  <li><a  href="index.html">Home</a></li>
+
+  <li><a href="schlafzimmer.html">Schlafzimmer</a></li>
+
+  <li><a class="active" href="wohnzimmer.html">Wohnzimmer</a></li>
+
+  <li><a href="arbeitszimmer.html">Arbeit</a></li>
+
+  <li class="dropdown">
+
+    <a   href="#" >Voreinstellungen</a>
+
+    <div class="dropdown-content">
+
+      <a href="setting_schlafzimmer.html">Schlafzimmer</a>
+
+      <a href="setting_wohnzimmer.html">Wohnzimmer</a>
+
+      <a href="setting_arbeitszimmer.html">Arbeit</a>
+
+       <li><a href="#" onClick="logout();">Abmelden</a></li>
+
+      
+
+  </li>
+
+</ul>
+
+<!--Menu end-->
+
+<!--Main start-->
+
+<div>
+
+
+<h2 align="center"> Wohnzimmer </h2>
+
+<h3 align="center" id="saveok">  </h3>
+
+
+
+<table width="200" align="center" cellpadding="20">
+
+  <tr>
+
+    <td>Heizung
+
+      <p id="demo"></p></td>
+
+    <td><input type="range" min="1" max="30" value="20"  id="heizung_range"></td>
+    <td><p>Wunschtemperatur: <span id="heizung_wert"></td>
+
+    <td><p>&#8451;</p>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td>Alarmanlage</td>
+
+    <td colspan="3"><label class="switch">
+
+      <input type="checkbox" id="global_alarmanlage" onClick="updateAlarmanlageStatus()">
+
+      <span class="slider round"></span>
+
+      </label></td>
+
+  </tr>
+
+  <tr>
+
+    <td>TV</td>
+
+    <td colspan="3"><label class="switch">
+
+      <input type="checkbox" id="tv_switch" onclick="updateTVStatus()">
+
+      <span class="slider round"></span>
+
+</label></td>
+
+    </tr>
+
+  <tr>
+
+    <td colspan="4" align="right"></td>
+
+    </tr>
+
+</table>
+
+
+
+
+
+</div>
+
+<!--main end-->
+
+<!--include JavaScript-->
+
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+
+<script src="js/index.js"></script>
+
+<script src="js/livingroom.js"></script>
+
+
+
+
+</body>
+
+</html>
+

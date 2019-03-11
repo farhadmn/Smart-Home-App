@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+
+<link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+
+
+
+<ul>
+
+  <li><a  href="index.html">Home</a></li>
+
+  <li><a href="schlafzimmer.html">Schlafzimmer</a></li>
+
+  <li><a href="wohnzimmer.html">Wohnzimmer</a></li>
+
+  <li><a href="arbeitszimmer.html">Arbeit</a></li>
+
+  <li class="dropdown">
+
+    <a  class="active" href="#" >Voreinstellungen</a>
+
+    <div class="dropdown-content">
+
+      <a href="setting_schlafzimmer.html">Schlafzimmer</a>
+
+      <a href="setting_wohnzimmer.html">Wohnzimmer</a>
+
+      <a href="setting_arbeitszimmer.html">Arbeit</a>
+
+       <li><a href="#" onClick="logout();">Abmelden</a></li>
+  </li>
+
+</ul>
+
+
+
+
+
+<div>
+
+
+
+<h2 align="center"> Einstellung: Office</h2>
+
+<h3 align="center" id="saveok">  </h3>
+
+
+
+<table width="200" align="center" cellpadding="20">
+
+  <tr>
+    
+    <td>Druckerstatus</td>
+    
+    <td>
+      <select id="drucker">
+  <option value="normal">normal</option>
+  <option value="Papierleer">Papier-Leer</option>
+  <option value="tonerleer">Toner-Leer</option>
+
+</select>
+     
+      
+      
+      
+      </td>
+    
+  </tr>
+
+  <tr>
+    
+    <td colspan="2" align="right"><button   class="button" onclick="saveWData()">Speichern</button></td>
+    
+  </tr>
+
+</table>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+
+<script src="js/index.js"></script>
+
+<script src="js/settings_office.js"></script>
+
+
+
+
+
+</body>
+
+</html>
+

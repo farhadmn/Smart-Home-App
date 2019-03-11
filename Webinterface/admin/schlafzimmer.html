@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+
+<link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+
+
+
+<ul>
+
+  <li><a  href="index.html">Home</a></li>
+
+  <li><a class="active" href="schlafzimmer.html">Schlafzimmer</a></li>
+
+  <li><a href="wohnzimmer.html">Wohnzimmer</a></li>
+
+  <li><a href="arbeitszimmer.html">Arbeit</a></li>
+
+  <li class="dropdown">
+
+    <a   href="#" >Voreinstellungen</a>
+
+    <div class="dropdown-content">
+
+      <a href="setting_schlafzimmer.html">Schlafzimmer</a>
+
+      <a href="setting_wohnzimmer.html">Wohnzimmer</a>
+
+      <a href="setting_arbeitszimmer.html">Arbeit</a>
+
+       <li><a href="#" onClick="logout();">Abmelden</a></li>
+  </li>
+
+</ul>
+
+
+
+
+
+<div>
+
+
+
+<h2 align="center"> Einstellung: Schlafzimmer </h2>
+
+<h3 align="center" id="saveok">  </h3>
+
+
+
+<table width="200" align="center" cellpadding="20">
+
+  <tr>
+
+    <td>Licht <p id="demo"></p></td>
+
+    <td colspan="2"><label class="switch">
+
+  <input type="checkbox" id="schlafzimmer_licht" onClick="updateLichtStatus()">
+
+  <span class="slider round"></span>
+
+</label></td>
+
+  </tr>
+
+  <tr>
+
+    <td>Steckdose</td>
+
+    <td colspan="2"><label class="switch">
+
+  <input type="checkbox" id="schlafzimmer_steckdose" onClick="updateSteckdoseStatus()">
+
+  <span class="slider round"></span>
+
+</label></td>
+
+  </tr>
+
+  <tr>
+    
+    <td>Jalousien</td>
+    
+    <td> <input type="range"  id="jalousien_range"  min="0" max="4" value="2" ></td>
+    
+    <td> <p>Wert: <span id="jalousien_wert"></span></p></td>
+    
+  </tr>
+
+  <tr>
+
+    <td>Alarmanlage</td>
+
+    <td colspan="2"><label class="switch">
+
+  <input type="checkbox" id="global_alarmanlage" onClick="updateAlarmanlageStatus()">
+
+  <span class="slider round"></span>
+
+</label></td>
+
+  </tr>
+
+  <tr>
+
+    <td>Bekleidungsvorschlag</td>
+
+    <td colspan="2"><label class="switch">
+
+  <input type="checkbox" id="schlafzimmer_bekleidung" onClick="updateBekleidungStatus()">
+
+  <span class="slider round"></span>
+
+</label></td>
+
+  </tr>
+
+  <tr>
+
+    <td colspan="3" align="right"></td>
+
+    </tr>
+
+</table>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+
+<script src="js/index.js"></script>
+
+<script src="js/bedroom.js"></script>
+
+
+
+</body>
+
+</html>
+
