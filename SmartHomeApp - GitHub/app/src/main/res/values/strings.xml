@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SmartHome</string>
+    <string name="title_home">Wohnzimmer</string>
+    <string name="title_dashboard">Schlafzimmer</string>
+    <string name="title_notifications">Büro</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="auth_failed">User signIn failed. Try it again.</string>
+    <string name="minimum_password">Password to short.</string>
+
+    <string name="defaultwertmsg"> Bitte die Standardeinstellungen über die Webinterface einstellen.</string>
+
+    <string name="open_weather_maps_app_id">3b957f8df707db0bc68ab9171c70a995</string>
+
+
+</resources>
