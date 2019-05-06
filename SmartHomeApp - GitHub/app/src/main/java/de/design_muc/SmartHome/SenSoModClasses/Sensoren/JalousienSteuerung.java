@@ -36,13 +36,14 @@ public class JalousienSteuerung extends ComputedSensor {
 
     }
 
-        public void getAPIValue ( double lat, double lng)  {
+    public void getAPIValue ( double lat, double lng)  {
 
 
-            FetchAPIData task = new FetchAPIData();
-            task.execute("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=");
+        FetchAPIData task = new FetchAPIData();
+//        task.execute("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=");
+        task.execute("http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&APPID=e64f6007f0b760cc45977e7638309536");
 
-        }
+    }
 
 
 

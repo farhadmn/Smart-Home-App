@@ -32,23 +32,13 @@ public class Bekleidungsvorschlag extends ComputedSensor {
 
 
     public void decisionLogic() {
-
-
-
         if (myWettervorhersageSensor.getWetterValueAPI().equals("Rain")) {
             setVorschlag("Regenbekleidung");
-        }
-
-        if (myWettervorhersageSensor.getWetterValueAPI().equals("Snow")) {
+        } else if (myWettervorhersageSensor.getWetterValueAPI().equals("Snow")) {
             setVorschlag("Winterbekleidung");
-        }
-
-
-        if (myWettervorhersageSensor.getWetterValueAPI().equals("Clear") && (Double.valueOf(myWettervorhersageSensor.getTemp()) <= 5.0 )) {
+        } else if (myWettervorhersageSensor.getWetterValueAPI().equals("Clear") && (Double.valueOf(myWettervorhersageSensor.getTemp()) <= 5.0 )) {
             setVorschlag("Herbstlook");
-        }
-
-        if (myWettervorhersageSensor.getWetterValueAPI().equals("Clear") && (Double.valueOf(myWettervorhersageSensor.getTemp()) >20.0  )) {
+        }else if (myWettervorhersageSensor.getWetterValueAPI().equals("Clear") && (Double.valueOf(myWettervorhersageSensor.getTemp()) >20.0  )) {
             setVorschlag("Sommerbekleidung");
         }
 

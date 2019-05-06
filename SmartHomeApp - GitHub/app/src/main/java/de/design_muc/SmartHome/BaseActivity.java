@@ -1,6 +1,7 @@
 package de.design_muc.SmartHome;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,13 +11,12 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +32,7 @@ import org.altbeacon.beacon.Region;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
+import java.util.List;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Benutzerlokalisierung;
 
 public abstract class BaseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,BeaconConsumer {
@@ -44,8 +44,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     String raum;
     boolean alreadyExecuted;
 
-    private static final String TAG = "BEACON_TEst";
-    private ArrayList<String> beaconList;
+    private Dialog changeRoomDialog;
+    private static final String TAG = "BaseActivity";
+    private List<Beacon> beaconList;
     private BeaconManager beaconManager;
 
 
@@ -54,24 +55,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     public static final String mypreference = "de.design_muc.SmartHome";
 
     private Benutzerlokalisierung myGPSOrtung;
+    private Beacon closestBeacon;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
-        //super.onStart();
-
 
         navigationView = (BottomNavigationView) findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
 
-
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -82,19 +79,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         }
 
 
-        myGPSOrtung = new Benutzerlokalisierung(this, "");
-
-
-        //Ibeacon
-
-
-        this.beaconList = new ArrayList<String>();
-        this.beaconManager = BeaconManager.getInstanceForApplication(this);
-
-        this.beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
-        this.beaconManager.bind(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("This app needs location access");
                 builder.setMessage("Please grant location access so this app can detect beacons");
@@ -102,12 +88,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                     }
                 });
                 builder.show();
             }
         }
+        myGPSOrtung = new Benutzerlokalisierung(this, "");
+
+        //Ibeacon
+        this.beaconList = new ArrayList<>();
+        this.beaconManager = BeaconManager.getInstanceForApplication(this);
+        this.beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        this.beaconManager.bind(this);
     }
 
 
@@ -122,22 +115,28 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         this.beaconManager.setRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                //TODO
+                closestBeacon = null;
                 if (beacons.size() > 0) {
                     beaconList.clear();
                     for (Iterator<Beacon> iterator = beacons.iterator(); iterator.hasNext(); ) {
-                        beaconList.add(iterator.next().getId3().toString());
-                       String BeaconMinor= beaconList.get(0);
-
-
-                        int beaconM=Integer.valueOf(BeaconMinor);
-
-                        if(!alreadyExecuted) {
-                            roomDetected(beaconM);
-                            alreadyExecuted = true;
+                        Beacon currentDetectedBeacon = iterator.next();
+                        beaconList.add(currentDetectedBeacon);
+                        Log.v(TAG, "Beacon "+ currentDetectedBeacon.getId3() + "; Distance to beacon: "+  currentDetectedBeacon.getDistance() + "; signal strength : " + currentDetectedBeacon.getRssi());
+                    }
+                    for(Beacon currentBeacon : beaconList){
+                        if(closestBeacon == null){
+                            closestBeacon = currentBeacon;
+                        } else if(closestBeacon.getId3() != currentBeacon.getId3() && closestBeacon.getRssi() > currentBeacon.getRssi()){
+                            int doubleComaprison = Double.compare(closestBeacon.getDistance(), currentBeacon.getDistance());
+                            Log.v(TAG, "Value of Double.compare: " + doubleComaprison + "; Value of \"normal\" compare: " + Boolean.toString(closestBeacon.getRssi() > currentBeacon.getRssi()));
+                            alreadyExecuted = false;
+                            closestBeacon = currentBeacon;
                         }
-
-                        //roomDetected(beaconM);
-                       // Log.v(TAG, "index=" +test);
+                    }
+                    if(!alreadyExecuted) {
+                        alreadyExecuted = true;
+                        roomDetected(closestBeacon.getId3().toInt());
                     }
                     runOnUiThread(new Runnable() {
                         @Override
@@ -153,8 +152,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
-
         gotoMenu = false;
 
        // roomDetected(2);
@@ -165,36 +162,25 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     }
 
-
     public void roomDetected( int nr) {
-
-         alreadyExecuted= true;
-
-
-        if(nr==8){
-
-            raum="Wohnzimmer";
+        if(changeRoomDialog == null || !changeRoomDialog.isShowing()) {
+            if (nr == 8 && !this.getClass().getSimpleName().equals("HomeActivity")) {
+                raum = "Wohnzimmer";
+                showChangeRoomActivityDialog();
+            } else if (nr == 7 && !this.getClass().getSimpleName().equals("SchlafzimmerActivity")) {
+                raum = "Schlafzimmer";
+                showChangeRoomActivityDialog();
+            } else if (nr == 5 && !this.getClass().getSimpleName().equals("OfficeActivity")) {
+                raum = "Büro";
+                showChangeRoomActivityDialog();
+            }
         }
 
-        if(nr==7){
+    }
 
-            raum="Schlafzimmer";
-        }
-
-        if(nr==9){
-
-            raum="Büro";
-        }
-
-
-
-
-
-       // Toast.makeText(getApplicationContext(), "You pressed Test."+raum, Toast.LENGTH_LONG).show();
+    private void showChangeRoomActivityDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-
 
         builder.setCancelable(true);
         builder.setMessage("Raumerkannt:  " + " " + raum + " " + ", wollen Sie die Gerätestatus anschauen ?");
@@ -209,17 +195,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
-        //        setActivity(finalRaum);
-
                 setActivity(raum);
 
             }
         });
-        builder.show();
+        this.changeRoomDialog = builder.show();
     }
-
-
 
 
     public void setActivity (String IbeaconName){
@@ -229,7 +210,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 return;
             }
             startActivity(new Intent(this, HomeActivity.class));
-
         }
         if (IbeaconName.equals("Schlafzimmer")) {
             if (this.getClass().getSimpleName().equals("SchlafzimmerActivity")){
@@ -237,28 +217,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 return;
             }
             startActivity(new Intent(this, SchlafzimmerActivity.class));
-
         }
         if (IbeaconName.equals("Büro")) {
             if (this.getClass().getSimpleName().equals("OfficeActivity")){
                 return;
             }
             startActivity(new Intent(this, OfficeActivity.class));
-
         }
-
-
     }
 
-
-
-
-
-
-
-
     //action bar menu
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -266,32 +234,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         return super.onCreateOptionsMenu(menu);
     }
 
-
     //handler for action bar menu
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id==R.id.logout){
-
             signOut();
-
-
         }
-
-
         if (id==R.id.todoliste) {
-
             startActivity(new Intent(this, TodoListeActivity.class));
-        }
-
-        else if (id==R.id.settings) {
-
+        } else if (id==R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -309,14 +263,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         overridePendingTransition(0, 0);
     }
 
-
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         navigationView.postDelayed(() -> {
-
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_home) {
 
@@ -337,10 +287,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     }
 
-
-
-
-
     private void updateNavigationBarState(){
         int actionId = getNavigationMenuItemId();
         selectBottomNavigationBarItem(actionId);
@@ -355,12 +301,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     abstract int getNavigationMenuItemId();
 
-
-
-
-
-//Firebase logout
-
+    //Firebase logout
     public void signOut() {
      auth.getCurrentUser();
         if (auth.getCurrentUser() == null) {
@@ -374,9 +315,4 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 Toast.LENGTH_SHORT).show();
         finish();
     }
-
-
-
-
-
 }

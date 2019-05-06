@@ -26,7 +26,7 @@ public class Raumerkennung extends ComputedSensor implements BeaconConsumer {
     private Context mContext;
 
     public Raumerkennung(Context context) {
-     name="Raumerkennung";
+        name="Raumerkennung";
         mContext = context;
     }
 
@@ -60,9 +60,6 @@ public class Raumerkennung extends ComputedSensor implements BeaconConsumer {
                 output("UnknowRoom");
 
             }
-
-
-
         }
     }
 

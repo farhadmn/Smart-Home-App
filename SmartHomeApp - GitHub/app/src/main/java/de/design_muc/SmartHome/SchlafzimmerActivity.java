@@ -48,13 +48,10 @@ public class SchlafzimmerActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         //Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
      //   myRef_J = database.getReference();
-
 
         myRef.child("Settings").child("BedRoomDefaulValue").addValueEventListener(myValueEventListener);
         myRef.child("schlafzimmer").child("licht").addValueEventListener(myLichtValueEventListener);
@@ -66,75 +63,35 @@ public class SchlafzimmerActivity extends BaseActivity {
         SwitchAlarm = (Switch)findViewById(R.id.switch6);
         SwichtOutfit = (Switch)findViewById(R.id.switch7);
 
-
         seekbarjal = (SeekBar) findViewById(R.id.seekBar6);
         stufe = (TextView) findViewById(R.id.stufen);
         vorschlagTextView = (TextView) findViewById(R.id.textView13);
-
-
-
-
         vorschlagTextView = (TextView) findViewById(R.id.textView13);
 
         //initial. Sensoren
         myLicht= new LichtStatus(true);
         myJalousienSteuerung= new JalousienSteuerung();
-
-
         myAlarmanlage = Alarmanlage.getInstance();
-
-
         mybekleidungvorschlag = Bekleidungsvorschlag.getInstance();
-
         //Listener  myWettervorhersageSensor.getWetterValueAPI()
-
-
         myWettervorhersageSensor = WettervorhersageSensor.getInstance();
-
-
-        SwitchLicht.setOnCheckedChangeListener(myLichtOnCheckedChangeListener );
-
+        SwitchLicht.setOnCheckedChangeListener(myLichtOnCheckedChangeListener);
         SwitchAlarm.setOnCheckedChangeListener(myAlarmOnCheckedChangeListener);
         SwichtOutfit.setOnCheckedChangeListener(myOutFitOnCheckedChangeListener);
-
         seekbarjal.setOnSeekBarChangeListener(myJalOnSeekBarChangeListener);
 
-
-
-
-
-
         myJalousienSteuerung.decisionLogic();
-
         mybekleidungvorschlag.decisionLogic();
-
-
         getVorschlag();
 
         //mybekleidungvorschlag
-
-
-
-
-
-
     }
 
-
-
     public  void getVorschlag() {
-
-
         if (mybekleidungvorschlag.getStatus()) {
-
-
             vorschlag = mybekleidungvorschlag.getVorschlag();
-
-
             if (vorschlag != null) {
-
                 vorschlagTextView.setText(vorschlag);
-
             } else {
                 vorschlagTextView.setText("Outfitvorschlag  nicht möglich.");
             }
@@ -144,14 +101,7 @@ public class SchlafzimmerActivity extends BaseActivity {
         }
     }
 
-
-
-
-
-
-
     // ValueEventListener for Outfit
-
     ValueEventListener myOutfitValueEventListener = new ValueEventListener(){
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -183,8 +133,6 @@ public class SchlafzimmerActivity extends BaseActivity {
 
 
     // outfit
-
-
     CompoundButton.OnCheckedChangeListener myOutFitOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
 
         @Override
@@ -210,12 +158,7 @@ public class SchlafzimmerActivity extends BaseActivity {
         }
     };
 
-
-
-
-
     // ValueEventListener for mytv
-
     ValueEventListener myAlarmValueEventListener = new ValueEventListener(){
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
