@@ -17,7 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Alarmanlage;
-import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Bekleidungsvorschlag;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.TV;
 
 public class HomeActivity extends BaseActivity {

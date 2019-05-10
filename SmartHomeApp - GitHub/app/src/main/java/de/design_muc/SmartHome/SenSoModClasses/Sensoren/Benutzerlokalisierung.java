@@ -21,21 +21,19 @@ public class Benutzerlokalisierung extends ComputedSensor  implements LocationLi
     private GPSSensor mygps;
     private double lat, lng;
 
-
-
     //GPS Sensor
-    boolean isGPSOn=false;
+    boolean isGPSOn;
     //Network locaion
-    boolean isNetworkOn=false;
+    boolean isNetworkOn;
 
     //minimum distance to request for location update
     private static final long min_dist=1;
 
     // minimum time to request location updates
-    private static final long min_time=1000*1; // 1 sec
+    private static final long min_time=1000; // 1 sec
 
     //flag to getlocation
-    boolean isLocationEnabled=false;
+    private boolean isLocationEnabled;
 
     LocationManager locationManager;
     Location location;
@@ -47,21 +45,13 @@ public class Benutzerlokalisierung extends ComputedSensor  implements LocationLi
         checkLoc();
         createGPSSensor();
         decisionLogic();
-
     }
 
 
     public Location  checkLoc(){
 
         locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
-
-
-
-
         try {
-
-
-
             locationManager=(LocationManager)mContext.getSystemService(LOCATION_SERVICE);
 
             //check for gps
@@ -70,56 +60,38 @@ public class Benutzerlokalisierung extends ComputedSensor  implements LocationLi
             //check for network
             isNetworkOn=locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-
-            if(!isGPSOn && !isNetworkOn)
-            {
+            if(!isGPSOn && !isNetworkOn) {
                 isLocationEnabled=false;
                 // no location provider
                 Toast.makeText(mContext,"No Location Provider is Available",Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 isLocationEnabled=true;
-
                 //  network location ist an,  request location update
-                if(isNetworkOn)
-                {
+                if(isNetworkOn) {
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,min_time,min_dist,this);
-                    if(locationManager!=null)
-                    {
+                    if(locationManager!=null) {
                         location=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if(location!=null)
-                        {
+                        if(location!=null) {
                             lat=location.getLatitude();
                             lng=location.getLongitude();
                         }
                     }
                 }
-                if(isGPSOn)
-                {
+                if(isGPSOn) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,min_time,min_dist,this);
-                    if(locationManager!=null)
-                    {
+                    if(locationManager!=null) {
                         location=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if(location!=null)
-                        {
+                        if(location!=null) {
                             lat=location.getLatitude();
                             lng=location.getLongitude();
                         }
                     }
                 }
             }
-
-
-
-
-
-        }
-        catch(SecurityException e) {
+        } catch(SecurityException e) {
             e.printStackTrace();
         }
-
         return location;
-
     }
 
 
@@ -138,53 +110,31 @@ public class Benutzerlokalisierung extends ComputedSensor  implements LocationLi
         double lat, lng;
         String t,m;
         lat=mygps.getLat();
-        lng= mygps.getLng();
+        lng= mygps.getLong();
         // String s = Double.toString(lat);
 
         // Toast.makeText(this,"Du bist zuhause:" + s,Toast.LENGTH_SHORT).show();
-
-
         DecimalFormat conv = new DecimalFormat("##.##");
         t= conv.format(lat);
         m= conv.format(lng);
 
-
-
-
         if(t.equals("48,21") && (m.equals("11,58"))){
-
             setOrt("Athome");
-
-        }
-
-        if(t.equals("48,55") && (m.equals("12,19"))){
-
-
+        } else if(t.equals("48,55") && (m.equals("12,19"))){
             setOrt("AtWork");
-
-        }
-
-        else {
-
-
+        } else {
             setOrt("Unkown");
-
         }
-
-
-
-
     }
 
 
 
     public void createGPSSensor(){
 
-        mygps= new GPSSensor(lat, lng);
+        mygps= GPSSensor.getIntance(this.mContext);
     }
 
     public double getLat() {
-
         double latgps;
         latgps=mygps.getLat();
         return latgps;
@@ -192,7 +142,7 @@ public class Benutzerlokalisierung extends ComputedSensor  implements LocationLi
 
     public double getLng() {
         double lnggps;
-        lnggps=mygps.getLng();
+        lnggps=mygps.getLong();
         return lnggps;
     }
 
@@ -200,16 +150,9 @@ public class Benutzerlokalisierung extends ComputedSensor  implements LocationLi
     public void onLocationChanged(Location location) {
 
         this.location=location;
-        test();
         // lat = location.getLatitude();
         // lng = location.getLongitude();
 
-    }
-
-    public void test(){
-
-        mygps.setLat(lat);
-        mygps.setLng(lng);
     }
 
     @Override

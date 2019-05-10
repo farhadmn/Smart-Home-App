@@ -14,6 +14,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,7 +81,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             finish();
         }
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -102,7 +104,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         this.beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
         this.beaconManager.bind(this);
     }
-
 
     @Override
     protected void onDestroy() {
@@ -153,13 +154,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             e.printStackTrace();
         }
         gotoMenu = false;
-
-       // roomDetected(2);
-
-
+        // roomDetected(2);
         //  deleteEintrag();
-
-
     }
 
     public void roomDetected( int nr) {
@@ -179,11 +175,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     }
 
     private void showChangeRoomActivityDialog() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder.setCancelable(true);
-        builder.setMessage("Raumerkannt:  " + " " + raum + " " + ", wollen Sie die Gerätestatus anschauen ?");
+        builder.setMessage("Raum '" + raum + "' erkannt. Wollen Sie zu dieser Raumansicht wechseln?");
 
         builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
             @Override
@@ -191,7 +185,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 dialogInterface.cancel();
             }
         });
-
         builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -213,7 +206,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         }
         if (IbeaconName.equals("Schlafzimmer")) {
             if (this.getClass().getSimpleName().equals("SchlafzimmerActivity")){
-
                 return;
             }
             startActivity(new Intent(this, SchlafzimmerActivity.class));
@@ -229,7 +221,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     //action bar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.navi_top,menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -253,7 +244,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     protected void onStart() {
         super.onStart();
         updateNavigationBarState();
-
     }
 
     // Remove inter-activity transition to avoid screen tossing on tapping bottom navigation items
@@ -282,9 +272,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             finish();
 
         }, 300);
-
         return true;
-
     }
 
     private void updateNavigationBarState(){
