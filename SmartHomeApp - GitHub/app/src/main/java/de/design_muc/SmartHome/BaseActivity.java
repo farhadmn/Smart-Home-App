@@ -14,9 +14,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -163,7 +160,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             if (nr == 8 && !this.getClass().getSimpleName().equals("HomeActivity")) {
                 raum = "Wohnzimmer";
                 showChangeRoomActivityDialog();
-            } else if (nr == 7 && !this.getClass().getSimpleName().equals("SchlafzimmerActivity")) {
+            } else if (nr == 7 && !this.getClass().getSimpleName().equals("BedRoomActivity")) {
                 raum = "Schlafzimmer";
                 showChangeRoomActivityDialog();
             } else if (nr == 5 && !this.getClass().getSimpleName().equals("OfficeActivity")) {
@@ -205,10 +202,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             startActivity(new Intent(this, HomeActivity.class));
         }
         if (IbeaconName.equals("Schlafzimmer")) {
-            if (this.getClass().getSimpleName().equals("SchlafzimmerActivity")){
+            if (this.getClass().getSimpleName().equals("BedRoomActivity")){
                 return;
             }
-            startActivity(new Intent(this, SchlafzimmerActivity.class));
+            startActivity(new Intent(this, BedRoomActivity.class));
         }
         if (IbeaconName.equals("Büro")) {
             if (this.getClass().getSimpleName().equals("OfficeActivity")){
@@ -263,7 +260,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 startActivity(new Intent(this, HomeActivity.class));
 
             } else if (itemId == R.id.navigation_dashboard) {
-                startActivity(new Intent(this, SchlafzimmerActivity.class));
+                startActivity(new Intent(this, BedRoomActivity.class));
 
             } else if (itemId == R.id.navigation_notifications) {
                 startActivity(new Intent(this, OfficeActivity.class));

@@ -22,7 +22,7 @@ import de.design_muc.SmartHome.SenSoModClasses.Sensoren.JalousienSteuerung;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.LichtStatus;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.WeatherSensor;
 
-public class SchlafzimmerActivity extends BaseActivity {
+public class BedRoomActivity extends BaseActivity {
 
 
     Switch SwitchLicht,SwitchAlarm, SwichtOutfit;
@@ -94,7 +94,7 @@ public class SchlafzimmerActivity extends BaseActivity {
             myClothRecommendation.setStatus(myOutfitStatus);
 
             if(myClothRecommendation.getStatus()){
-                WeatherSensor.getInstance(SchlafzimmerActivity.this).getWetterValueAPI(SchlafzimmerActivity.this);
+                WeatherSensor.getInstance(BedRoomActivity.this).getWetterValueAPI(BedRoomActivity.this);
             }
         }
 
@@ -286,7 +286,7 @@ public class SchlafzimmerActivity extends BaseActivity {
 
     //defaultpopup
     private void showPopup() {
-        new AlertDialog.Builder(SchlafzimmerActivity.this)
+        new AlertDialog.Builder(BedRoomActivity.this)
                 .setTitle(getString(R.string.app_name))
                 .setMessage(getString(R.string.defaultwertmsg))
                 .setIcon(R.mipmap.ic_launcher)

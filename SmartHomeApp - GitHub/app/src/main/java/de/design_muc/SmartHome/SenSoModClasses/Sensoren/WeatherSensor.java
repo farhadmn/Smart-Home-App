@@ -1,10 +1,8 @@
 package de.design_muc.SmartHome.SenSoModClasses.Sensoren;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import de.design_muc.SmartHome.SchlafzimmerActivity;
+import de.design_muc.SmartHome.BedRoomActivity;
 
 public class WeatherSensor extends VirtualSensor {
 
@@ -25,12 +23,12 @@ public class WeatherSensor extends VirtualSensor {
     private String weather, wind, temp = "";
     private static String WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather?lat=";
     private static String WEATHER_API_URL_KEY = "&APPID=e64f6007f0b760cc45977e7638309536";
-    private SchlafzimmerActivity activity;
+    private BedRoomActivity activity;
 
     private WeatherSensor(Activity activity) {
         this.multiple = false;
         this.name = "WeatherSensor";
-        this.activity = (SchlafzimmerActivity) activity;
+        this.activity = (BedRoomActivity) activity;
         getWetterValueAPI(activity);
     }
 

@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".BaseActivity" />
-        <activity android:name=".SchlafzimmerActivity" />
+        <activity android:name=".BedRoomActivity" />
         <activity android:name=".OfficeActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".HomeActivity" />
