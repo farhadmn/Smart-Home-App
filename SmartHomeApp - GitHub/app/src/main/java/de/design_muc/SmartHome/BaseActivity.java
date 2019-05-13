@@ -33,9 +33,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Benutzerlokalisierung;
 
-public abstract class BaseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,BeaconConsumer {
+public abstract class BaseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BeaconConsumer {
 
     protected BottomNavigationView navigationView;
     private FirebaseAuth auth;
@@ -49,7 +50,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     private List<Beacon> beaconList;
     private BeaconManager beaconManager;
 
-
     //SharedPreferences für Defaultwerte
     SharedPreferences sharedpreferences;
     public static final String mypreference = "de.design_muc.SmartHome";
@@ -57,13 +57,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     private Benutzerlokalisierung myGPSOrtung;
     private Beacon closestBeacon;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
 
-        navigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
 
         //Get Firebase auth instance
@@ -120,19 +119,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                     for (Iterator<Beacon> iterator = beacons.iterator(); iterator.hasNext(); ) {
                         Beacon currentDetectedBeacon = iterator.next();
                         beaconList.add(currentDetectedBeacon);
-                        Log.v(TAG, "Beacon "+ currentDetectedBeacon.getId3() + "; Distance to beacon: "+  currentDetectedBeacon.getDistance() + "; signal strength : " + currentDetectedBeacon.getRssi());
+                        Log.v(TAG, "Beacon " + currentDetectedBeacon.getId3() + "; Distance to beacon: " + currentDetectedBeacon.getDistance() + "; signal strength : " + currentDetectedBeacon.getRssi());
                     }
-                    for(Beacon currentBeacon : beaconList){
-                        if(closestBeacon == null){
+                    for (Beacon currentBeacon : beaconList) {
+                        if (closestBeacon == null) {
                             closestBeacon = currentBeacon;
-                        } else if(closestBeacon.getId3() != currentBeacon.getId3() && closestBeacon.getRssi() > currentBeacon.getRssi()){
+                        } else if (closestBeacon.getId3() != currentBeacon.getId3() && closestBeacon.getRssi() > currentBeacon.getRssi()) {
                             int doubleComaprison = Double.compare(closestBeacon.getDistance(), currentBeacon.getDistance());
                             Log.v(TAG, "Value of Double.compare: " + doubleComaprison + "; Value of \"normal\" compare: " + Boolean.toString(closestBeacon.getRssi() > currentBeacon.getRssi()));
                             alreadyExecuted = false;
                             closestBeacon = currentBeacon;
                         }
                     }
-                    if(!alreadyExecuted) {
+                    if (!alreadyExecuted) {
                         alreadyExecuted = true;
                         roomDetected(closestBeacon.getId3().toInt());
                     }
@@ -151,12 +150,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             e.printStackTrace();
         }
         gotoMenu = false;
-        // roomDetected(2);
-        //  deleteEintrag();
     }
 
-    public void roomDetected( int nr) {
-        if(changeRoomDialog == null || !changeRoomDialog.isShowing()) {
+    public void roomDetected(int nr) {
+        if (changeRoomDialog == null || !changeRoomDialog.isShowing()) {
             if (nr == 8 && !this.getClass().getSimpleName().equals("HomeActivity")) {
                 raum = "Wohnzimmer";
                 showChangeRoomActivityDialog();
@@ -192,23 +189,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         this.changeRoomDialog = builder.show();
     }
 
-
-    public void setActivity (String IbeaconName){
+    public void setActivity(String IbeaconName) {
 
         if (IbeaconName.equals("Wohnzimmer")) {
-            if (this.getClass().getSimpleName().equals("HomeActivity")){
+            if (this.getClass().getSimpleName().equals("HomeActivity")) {
                 return;
             }
             startActivity(new Intent(this, HomeActivity.class));
-        }
-        if (IbeaconName.equals("Schlafzimmer")) {
-            if (this.getClass().getSimpleName().equals("BedRoomActivity")){
+        } else if (IbeaconName.equals("Schlafzimmer")) {
+            if (this.getClass().getSimpleName().equals("BedRoomActivity")) {
                 return;
             }
             startActivity(new Intent(this, BedRoomActivity.class));
-        }
-        if (IbeaconName.equals("Büro")) {
-            if (this.getClass().getSimpleName().equals("OfficeActivity")){
+        } else if (IbeaconName.equals("Büro")) {
+            if (this.getClass().getSimpleName().equals("OfficeActivity")) {
                 return;
             }
             startActivity(new Intent(this, OfficeActivity.class));
@@ -218,7 +212,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     //action bar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.navi_top,menu);
+        getMenuInflater().inflate(R.menu.navi_top, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -226,12 +220,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.logout){
+        if (id == R.id.logout) {
             signOut();
-        }
-        if (id==R.id.todoliste) {
+        } else if (id == R.id.todoliste) {
             startActivity(new Intent(this, TodoListeActivity.class));
-        } else if (id==R.id.settings) {
+        } else if (id == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
@@ -256,15 +249,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         navigationView.postDelayed(() -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_home) {
-
                 startActivity(new Intent(this, HomeActivity.class));
-
             } else if (itemId == R.id.navigation_dashboard) {
                 startActivity(new Intent(this, BedRoomActivity.class));
-
             } else if (itemId == R.id.navigation_notifications) {
                 startActivity(new Intent(this, OfficeActivity.class));
-
             }
             finish();
 
@@ -272,7 +261,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         return true;
     }
 
-    private void updateNavigationBarState(){
+    private void updateNavigationBarState() {
         int actionId = getNavigationMenuItemId();
         selectBottomNavigationBarItem(actionId);
     }
@@ -288,9 +277,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     //Firebase logout
     public void signOut() {
-     auth.getCurrentUser();
+        auth.getCurrentUser();
         if (auth.getCurrentUser() == null) {
-            Toast.makeText(getApplicationContext(), "No user signed in.",
+            Toast.makeText(getApplicationContext(), "Kein Benutzer ist eingeloggt.",
                     Toast.LENGTH_SHORT).show();
             return;
         }
