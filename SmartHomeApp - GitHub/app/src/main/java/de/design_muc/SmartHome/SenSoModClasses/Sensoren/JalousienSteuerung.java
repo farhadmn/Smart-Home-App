@@ -3,30 +3,25 @@ package de.design_muc.SmartHome.SenSoModClasses.Sensoren;
 import android.app.Activity;
 import android.util.Log;
 
-
 public class JalousienSteuerung extends ComputedSensor {
-
 
     private JalousienSensor myJalousienSensor;
     private WeatherSensor myWeatherSensor;
-
 
     public JalousienSteuerung(Activity activity) {
         multiple = false;
         this.name = "JalousienSteuerung";
         onCreate(activity);
-        getAPIValue(48.14,11.58);
+        getAPIValue(48.14, 11.58);
         decisionLogic();
 //        test();
     }
-
 
     public void onCreate(Activity activity) {
         myJalousienSensor = new JalousienSensor(0);
         myWeatherSensor = WeatherSensor.getInstance(activity);
 
     }
-
 
     public void decisionLogic() {
 //        if (myWeatherSensor.getWetterValueAPI(this).equals("Snow") || myWeatherSensor.getWetterValueAPI().equals("Rain") || myWeatherSensor.getWind().equals("10")&& myJalousienSensor.getJalousienStatus() > 0) {
@@ -35,7 +30,7 @@ public class JalousienSteuerung extends ComputedSensor {
 
     }
 
-    public void getAPIValue ( double lat, double lng)  {
+    public void getAPIValue(double lat, double lng) {
 
 //        FetchAPIData task = new FetchAPIData(this.con);
 ////        task.execute("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=");
@@ -47,31 +42,18 @@ public class JalousienSteuerung extends ComputedSensor {
         myJalousienSensor.setJalousienStatus(s);
     }
 
-
-    public synchronized int getStatus(){
+    public synchronized int getStatus() {
         return myJalousienSensor.getJalousienStatus();
     }
 
-
-    public void test(){
-        String w,t;
-        w= myWeatherSensor.getWind();
-        Log.i("Wetter", w);
+    public void test() {
+        Double w, t;
+        w = myWeatherSensor.getWind();
+        Log.i("Wetter", String.valueOf(w));
     }
 }
 
-
-
-
-
-
-
-
-
-    /*TODO: create logic to return the Steuerungsmethode*/
-
-
-
+/*TODO: create logic to return the Steuerungsmethode*/
 
 
 // Use IDE to generate toString and equals methods

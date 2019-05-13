@@ -1,7 +1,6 @@
 package de.design_muc.SmartHome.SenSoModClasses.Sensoren;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ContextDescription {
 
@@ -11,39 +10,36 @@ public class ContextDescription {
 
     public ContextDescription(String name) {
 
-        this.name= name;
+        this.name = name;
         todos = new ArrayList<String>();
 
     }
 
-
-
     public static ContextDescription getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new ContextDescription("ContextDescription");
         return instance;
     }
 
-    public void setTodo (String todo){
+    public void setTodo(String todo) {
         todos.add(todo);
 
     }
 
-    public String getTodo(int pos){
+    public String getTodo(int pos) {
         String todo;
-        todo=todos.get(pos);
+        todo = todos.get(pos);
 
         return todo;
     }
 
-    public int  getSize(){
+    public int getSize() {
 
-        int i=todos.size();
-        return  i;
+        int i = todos.size();
+        return i;
     }
 
-
-    public void deleteEintrag (int pos){
+    public void deleteEintrag(int pos) {
 
         todos.remove(pos);
     }

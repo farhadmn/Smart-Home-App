@@ -65,7 +65,9 @@
         android:layout_alignStart="@+id/textView"
         android:layout_marginStart="-1dp"
         android:layout_marginTop="37dp"
-        android:text="Jalousien" />
+        android:text="Jalousien"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_marginLeft="-1dp" />
 
     <SeekBar
         android:id="@+id/seekBar6"
@@ -90,7 +92,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
+        android:layout_marginLeft="68dp"
         android:layout_marginTop="30dp"
         android:text="Alarmanlage" />
 
@@ -108,7 +110,9 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:layout_marginBottom="-4dp"
-        android:text="Aus" />
+        android:text="Aus"
+        android:layout_marginLeft="70dp"
+        android:layout_alignLeft="@+id/seekBar6" />
 
     <TextView
         android:id="@+id/textView12"
@@ -117,7 +121,8 @@
         android:layout_below="@+id/textView11"
         android:layout_alignStart="@+id/textView"
         android:layout_marginTop="26dp"
-        android:text="Bekleidungsvorschlag" />
+        android:text="Bekleidungsvorschlag"
+        android:layout_alignLeft="@+id/textView" />
 
     <Switch
         android:id="@+id/switch7"
@@ -137,6 +142,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView20"
         android:layout_marginTop="12dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginLeft="68dp"
         android:gravity="center"
         android:text="TextView"
         android:textSize="16sp" />

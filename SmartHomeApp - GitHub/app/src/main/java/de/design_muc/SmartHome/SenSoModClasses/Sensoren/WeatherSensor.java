@@ -18,11 +18,11 @@ import de.design_muc.SmartHome.BedRoomActivity;
 
 public class WeatherSensor extends VirtualSensor {
 
-
     private static WeatherSensor instance = null;
-    private String weather, wind, temp = "";
+    private String weather = "";
+    private double wind, temp;
     private static String WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather?lat=";
-    private static String WEATHER_API_URL_KEY = "&APPID=e64f6007f0b760cc45977e7638309536";
+    private static String WEATHER_API_URL_KEY = "&APPID=e64f6007f0b760cc45977e7638309536&units=metric";
     private BedRoomActivity activity;
 
     private WeatherSensor(Activity activity) {
@@ -35,23 +35,24 @@ public class WeatherSensor extends VirtualSensor {
     public void getWetterValueAPI(Activity activity) {
         FetchWeatherData fetchWeatherData = new FetchWeatherData();
         fetchWeatherData.execute(WEATHER_API_URL + GPSSensor.getIntance(activity).getLat()
-                + "&lon="+ GPSSensor.getIntance(activity).getLong() + WEATHER_API_URL_KEY);
+                + "&lon=" + GPSSensor.getIntance(activity).getLong() + WEATHER_API_URL_KEY);
     }
 
     public static WeatherSensor getInstance(Activity activity) {
-        if(instance == null)
+        if (instance == null)
             instance = new WeatherSensor(activity);
         return instance;
     }
 
-    public String getWind() {
+    public double getWind() {
         return wind;
     }
 
-    public String getTemp() {
+    public double getTemp() {
         return temp;
     }
-    public String getWeather(){
+
+    public String getWeather() {
         return weather;
     }
 
@@ -69,7 +70,7 @@ public class WeatherSensor extends VirtualSensor {
                 InputStream in = urlConnection.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
                 int data = reader.read();
-                while (data != -1){
+                while (data != -1) {
                     char current = (char) data;
                     result += current;
                     data = reader.read();
@@ -97,12 +98,12 @@ public class WeatherSensor extends VirtualSensor {
 
                 //Temperatur
                 JSONObject main = json.getJSONObject("main");
-                temp = main.getString("temp");
-                Log.i("Temp", temp);
+                temp = main.getDouble("temp");
+                Log.i("Temp", String.valueOf(temp));
 
                 //Wind
-                wind = json.getJSONObject("wind").getString("speed");
-                Log.i("Wind", wind);
+                wind = json.getJSONObject("wind").getDouble("speed");
+                Log.i("Wind", String.valueOf(wind));
                 activity.getRecommendation();
 
             } catch (JSONException e) {
