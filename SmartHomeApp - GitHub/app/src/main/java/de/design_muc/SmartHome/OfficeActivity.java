@@ -18,27 +18,33 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Calendar;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ComputedSensor;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ContextDescription;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.DruckerSensor;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Kalender;
 
 public class OfficeActivity extends BaseActivity {
 
-
     private DatabaseReference myRef;
     private boolean defaultValue;
 
-    TextView druckerStatusTextV;
+    private TextView druckerStatusTextV;
 
-    DruckerSensor myDrucker;
+    private DruckerSensor myDrucker;
     private ArrayList<String> termine;
     private ListView calanderListView;
 
-    private Kalender mycalander;
+    private Calendar mycalander;
     private ArrayAdapter<String> adapter;
     private ContextDescription myContextDescription;
+
+    private static final int TITLE = 0;
+    private static final int START_DATE = 1;
+    private static final int END_DATE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,72 +53,55 @@ public class OfficeActivity extends BaseActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
-        druckerStatusTextV = (TextView) findViewById(R.id.druckerstatus);
-
+        druckerStatusTextV = findViewById(R.id.druckerstatus);
 
         myRef.child("Settings").child("OfficeDefaultValue").addValueEventListener(myValueEventListener);
         myRef.child("office").child("drucker").addValueEventListener(myDruckerValueEventListener);
 
-
-
         myDrucker = DruckerSensor.getInstance();
 
+        calanderListView = findViewById(R.id.calListView);
 
-        calanderListView = (ListView) findViewById(R.id.calListView);
+        termine = new ArrayList<>();
 
-        termine = new ArrayList<String>();
+        mycalander = new Calendar();
+        Map<String, List<String>> appointments = mycalander.readCalendarEvent(this);
+        for(Map.Entry<String, List<String>> entry: appointments.entrySet()) {
+            termine.add(entry.getValue().get(TITLE) + " von " + entry.getValue().get(START_DATE) + " bis " + entry.getValue().get(END_DATE));
+        }
 
-
-
-        termine.add("04.03.19-Abgabe");
-        termine.add("15.03.09-Meeting");
-
-        mycalander= new Kalender(termine);
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, this.termine);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.termine);
         this.calanderListView.setAdapter(adapter);
-
 
         myContextDescription = ContextDescription.getInstance();
 
     }
 
-
-
     // ValueEventListener for Drucker
-
-    ValueEventListener myDruckerValueEventListener = new ValueEventListener(){
+    ValueEventListener myDruckerValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-            String sDB=  String.valueOf(dataSnapshot.getValue());
+            String sDB = String.valueOf(dataSnapshot.getValue());
             myDrucker.setStatusDrucker(sDB);
-           // Toast.makeText(getApplicationContext(), "You pressed Test." +sDB, Toast.LENGTH_LONG).show();
+            // Toast.makeText(getApplicationContext(), "You pressed Test." +sDB, Toast.LENGTH_LONG).show();
 
-            if(myDrucker.getStatusDrucker().equals("normal")){
+            if (myDrucker.getStatusDrucker().equals("normal")) {
                 druckerStatusTextV.setText("normal");
                 druckerStatusTextV.setTextColor(Color.parseColor("#33cc33"));
 
-            }
-
-            if(myDrucker.getStatusDrucker().equals("Papierleer")){
+            } else if (myDrucker.getStatusDrucker().equals("Papierleer")) {
                 druckerStatusTextV.setText("Papier ist leer");
                 druckerStatusTextV.setTextColor(Color.parseColor("#ff4000"));
                 myContextDescription.setTodo("Biite Papier einlegen bzw. nachbestellen");
-            }
-
-            if(myDrucker.getStatusDrucker().equals("tonerleer")){
+            } else if (myDrucker.getStatusDrucker().equals("tonerleer")) {
                 druckerStatusTextV.setText("Toner ist Leer.");
                 druckerStatusTextV.setTextColor(Color.parseColor("#ff4000"));
                 myContextDescription.setTodo("Biite Toner nachbestellen");
                 String test;
-                test= myContextDescription.getTodo(0);
-                Toast.makeText(getApplicationContext(), "You pressed Test." +test, Toast.LENGTH_LONG).show();
+                test = myContextDescription.getTodo(0);
+                Toast.makeText(getApplicationContext(), "You pressed Test." + test, Toast.LENGTH_LONG).show();
             }
-
-
-
         }
 
         @Override
@@ -120,13 +109,6 @@ public class OfficeActivity extends BaseActivity {
             // ...
         }
     };
-
-
-
-
-
-
-
 
     @Override
     int getContentViewId() {
@@ -140,19 +122,13 @@ public class OfficeActivity extends BaseActivity {
 
 
     // Firebase Listener // check for default value
-
-
-    ValueEventListener myValueEventListener = new ValueEventListener(){
+    ValueEventListener myValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-
-
             defaultValue = (Boolean) dataSnapshot.getValue();
-
-            if(!defaultValue) {
+            if (!defaultValue) {
                 showPopup();
             }
-
         }
 
         @Override
@@ -161,11 +137,7 @@ public class OfficeActivity extends BaseActivity {
         }
     };
 
-
-
     //defaultpopup
-
-
     private void showPopup() {
         new AlertDialog.Builder(OfficeActivity.this)
                 .setTitle(getString(R.string.app_name))
@@ -180,11 +152,7 @@ public class OfficeActivity extends BaseActivity {
 
                     }
                 })
-
                 .show();
     }
-
-
-
 
 }

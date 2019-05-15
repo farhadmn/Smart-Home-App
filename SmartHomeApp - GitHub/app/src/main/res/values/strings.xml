@@ -11,6 +11,7 @@
     <string name="defaultwertmsg"> Bitte die Standardeinstellungen über die Webinterface einstellen.</string>
 
     <string name="open_weather_maps_app_id">3b957f8df707db0bc68ab9171c70a995</string>
+    <string name="outfit_recommendation_off_text">Kein Outfitvorschlag möglich! \n Schalten Sie den Outfitvorschlag ein.</string>
 
 
 </resources>

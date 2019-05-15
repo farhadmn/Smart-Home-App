@@ -100,7 +100,7 @@
         android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Default-Werte zurückgesetzen"
+        android:text="Default-Werte zurücksetzen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"

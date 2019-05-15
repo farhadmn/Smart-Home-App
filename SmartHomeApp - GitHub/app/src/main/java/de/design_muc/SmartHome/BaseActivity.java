@@ -91,6 +91,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 });
                 builder.show();
             }
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED){
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("This app needs calendar access");
+                builder.setMessage("Please grant calender read access so this app can detect your next appointments");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        requestPermissions(new String[]{Manifest.permission.READ_CALENDAR}, 1);
+                    }
+                });
+                builder.show();
+            }
         }
         myGPSOrtung = new Benutzerlokalisierung(this, "");
 
