@@ -18,14 +18,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Alarmanlage;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ClothRecommendation;
-import de.design_muc.SmartHome.SenSoModClasses.Sensoren.JalousienSteuerung;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ComputedSensor;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.JalousienControl;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.LichtStatus;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.PhysicalSensor;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.VirtualSensor;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.WeatherSensor;
 
 public class BedRoomActivity extends BaseActivity {
 
 
-    Switch SwitchLicht,SwitchAlarm, SwichtOutfit;
+    private Switch switchLight, switchAlarm, swichtOutfit;
     private DatabaseReference myRef, myRef_J;
     private boolean defaultValue;
     private String recommendation;
@@ -33,10 +36,10 @@ public class BedRoomActivity extends BaseActivity {
     //sensoren
     private LichtStatus myLight;
     private Alarmanlage myAlarmSystem;
-    private JalousienSteuerung myJalousienControl;
+    private JalousienControl myJalousienControl;
     private ClothRecommendation myClothRecommendation;
     TextView scale, recommendationTextView;
-    SeekBar seekbarjal;
+    SeekBar seekBarJalousie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,28 +55,29 @@ public class BedRoomActivity extends BaseActivity {
         myRef.child("Global_values").child("alarmanlage").addValueEventListener(myAlarmValueEventListener);
         myRef.child("schlafzimmer").child("schlafzimmer_bekleidung").addValueEventListener(myOutfitValueEventListener);
 
-        SwitchLicht = findViewById(R.id.switch3);
-        SwitchAlarm = findViewById(R.id.switch6);
-        SwichtOutfit = findViewById(R.id.switch7);
+        switchLight = findViewById(R.id.switch3);
+        switchAlarm = findViewById(R.id.switch6);
+        swichtOutfit = findViewById(R.id.switch7);
 
-        seekbarjal = findViewById(R.id.seekBar6);
+        seekBarJalousie = findViewById(R.id.seekBar6);
         scale = findViewById(R.id.stufen);
         recommendationTextView = findViewById(R.id.textView13);
 
         //initial. Sensoren
         myLight = new LichtStatus(true);
-        myJalousienControl = new JalousienSteuerung(this);
+        myJalousienControl = new JalousienControl();
         myAlarmSystem = Alarmanlage.getInstance();
         myClothRecommendation = ClothRecommendation.getInstance(this);
-        SwitchLicht.setOnCheckedChangeListener(myLichtOnCheckedChangeListener);
-        SwitchAlarm.setOnCheckedChangeListener(myAlarmOnCheckedChangeListener);
-        SwichtOutfit.setOnCheckedChangeListener(myOutFitOnCheckedChangeListener);
-        seekbarjal.setOnSeekBarChangeListener(myJalOnSeekBarChangeListener);
+        switchLight.setOnCheckedChangeListener(myLichtOnCheckedChangeListener);
+        switchAlarm.setOnCheckedChangeListener(myAlarmOnCheckedChangeListener);
+        swichtOutfit.setOnCheckedChangeListener(myOutFitOnCheckedChangeListener);
+        seekBarJalousie.setOnSeekBarChangeListener(myJalOnSeekBarChangeListener);
 
-        myJalousienControl.decisionLogic();
+
+        WeatherSensor.getInstance().getWetterValueAPI(this);
     }
 
-    public void getRecommendation() {
+    public void getWeatherRecommendation() {
         if (myClothRecommendation.getStatus()) {
             recommendation = myClothRecommendation.getRecommendation();
             if (recommendation != null) {
@@ -82,7 +86,7 @@ public class BedRoomActivity extends BaseActivity {
                 recommendationTextView.setText("Outfitvorschlag  nicht möglich.");
             }
         } else {
-            recommendationTextView.setText("Outfitvorschlag einschalten. ");
+            recommendationTextView.setText(R.string.outfit_recommendation_off_text);
         }
     }
 
@@ -93,9 +97,6 @@ public class BedRoomActivity extends BaseActivity {
             Boolean myOutfitStatus = (Boolean) dataSnapshot.getValue();
             myClothRecommendation.setStatus(myOutfitStatus);
 
-            if(myClothRecommendation.getStatus()){
-                WeatherSensor.getInstance(BedRoomActivity.this).getWetterValueAPI(BedRoomActivity.this);
-            }
         }
 
         @Override
@@ -106,22 +107,20 @@ public class BedRoomActivity extends BaseActivity {
 
     // outfit
     CompoundButton.OnCheckedChangeListener myOutFitOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            // TODO Auto-generated method stub
-
+            recommendationTextView.setText("");
             if(isChecked) {
-                SwichtOutfit.setText("An");
+                swichtOutfit.setText("An");
                 myClothRecommendation.setStatus(true);
                 myRef.child("schlafzimmer").child("schlafzimmer_bekleidung").setValue(true);
-                getRecommendation();
+                WeatherSensor.getInstance().getWetterValueAPI(BedRoomActivity.this);
 
             } else {
-                SwichtOutfit.setText("Aus");
+                swichtOutfit.setText("Aus");
                 myClothRecommendation.setStatus(false);
                 myRef.child("schlafzimmer").child("schlafzimmer_bekleidung").setValue(false);
-                recommendationTextView.setText("");
+                recommendationTextView.setText(R.string.outfit_recommendation_off_text);
             }
         }
     };
@@ -134,11 +133,11 @@ public class BedRoomActivity extends BaseActivity {
             Boolean myAlarmStatusDB = (Boolean) dataSnapshot.getValue();
             myAlarmSystem.setStatus(myAlarmStatusDB);
 
-            if(myAlarmSystem.getStatus()){
-                SwitchAlarm.setChecked(false);
-            } else {
-                SwitchAlarm.setChecked(true);
-            }
+//            if(myAlarmSystem.getStatus()){
+//                switchAlarm.setChecked(false);
+//            } else {
+//                switchAlarm.setChecked(true);
+//            }
         }
 
         @Override
@@ -154,11 +153,11 @@ public class BedRoomActivity extends BaseActivity {
             // TODO Auto-generated method stub
             if(isChecked)
             {
-                SwitchAlarm.setText("An");
+                switchAlarm.setText("An");
                 myAlarmSystem.setStatus(true);
                 myRef.child("Global_values").child("alarmanlage").setValue(true);
             } else {
-                SwitchAlarm.setText("Aus");
+                switchAlarm.setText("Aus");
                 myAlarmSystem.setStatus(false);
                 myRef.child("Global_values").child("alarmanlage").setValue(false);
 
@@ -172,14 +171,14 @@ public class BedRoomActivity extends BaseActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
-            Boolean myllchtStatus = (Boolean) dataSnapshot.getValue();
-            myLight.setStatus(myllchtStatus);
+            Boolean myLightStatus = (Boolean) dataSnapshot.getValue();
+            myLight.setStatus(myLightStatus);
 
-            if(myLight.getStatus()==false){
-                SwitchLicht.setChecked(false);
-            } else {
-                SwitchLicht.setChecked(true);
-            }
+//            if(myLight.getStatus()){
+//                switchLight.setChecked(false);
+//            } else {
+//                switchLight.setChecked(true);
+//            }
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
@@ -193,12 +192,12 @@ public class BedRoomActivity extends BaseActivity {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             // TODO Auto-generated method stub
             if(isChecked) {
-                SwitchLicht.setText("An");
+                switchLight.setText("An");
                 myLight.setStatus(true);
                 myRef.child("schlafzimmer").child("licht").setValue(true);
 
             } else {
-                SwitchLicht.setText("Aus");
+                switchLight.setText("Aus");
                 myLight.setStatus(false);
                 myRef.child("schlafzimmer").child("licht").setValue(false);
             }
@@ -214,16 +213,16 @@ public class BedRoomActivity extends BaseActivity {
             int statusBD=Integer.valueOf(sDB);
 
             if( statusBD==3){
-                seekbarjal.setProgress(3);
+                seekBarJalousie.setProgress(3);
 
             } else if( statusBD==2){
-                seekbarjal.setProgress(2);
+                seekBarJalousie.setProgress(2);
 
             } else if( statusBD==1){
-                seekbarjal.setProgress(1);
+                seekBarJalousie.setProgress(1);
 
             } else if( statusBD==0){
-                 seekbarjal.setProgress(0);
+                 seekBarJalousie.setProgress(0);
 
             }
             myJalousienControl.setStatus(statusBD);
@@ -266,6 +265,28 @@ public class BedRoomActivity extends BaseActivity {
     int getNavigationMenuItemId() {
         return R.id.navigation_dashboard;
 
+    }
+
+    @Override
+    public void handleSensorRecalls(PhysicalSensor physicalSensor) {
+
+    }
+
+    @Override
+    public void handleSensorRecalls(ComputedSensor computedSensor) {
+
+    }
+
+    @Override
+    public void handleSensorRecalls(VirtualSensor virtualSensor) {
+        if(virtualSensor instanceof WeatherSensor){
+            if(!swichtOutfit.isChecked()) {
+                recommendationTextView.setText(R.string.outfit_recommendation_off_text);
+            }else {
+            getWeatherRecommendation();
+            }
+            myJalousienControl.decisionLogic(seekBarJalousie);
+        }
     }
 
     // Firebase Listener // check for default value

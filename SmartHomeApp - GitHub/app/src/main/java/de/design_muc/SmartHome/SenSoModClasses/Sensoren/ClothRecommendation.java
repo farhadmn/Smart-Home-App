@@ -17,7 +17,7 @@ public class ClothRecommendation extends ComputedSensor {
         this.name = "ClothRecommendation";
         this.recommendation = recommendation;
         this.status = status;
-        this.myWeatherSensor = WeatherSensor.getInstance(activity);
+        this.myWeatherSensor = WeatherSensor.getInstance();
     }
 
     public void decisionLogic() {

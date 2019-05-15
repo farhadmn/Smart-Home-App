@@ -35,6 +35,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Benutzerlokalisierung;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ComputedSensor;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.PhysicalSensor;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.VirtualSensor;
 
 public abstract class BaseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BeaconConsumer {
 
@@ -287,6 +290,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     abstract int getContentViewId();
 
     abstract int getNavigationMenuItemId();
+
+    abstract public void handleSensorRecalls(PhysicalSensor physicalSensor);
+
+    abstract public void handleSensorRecalls(ComputedSensor computedSensor);
+
+    abstract public void handleSensorRecalls(VirtualSensor virtualSensor);
+
 
     //Firebase logout
     public void signOut() {

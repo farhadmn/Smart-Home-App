@@ -25,7 +25,8 @@ import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Calendar;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ComputedSensor;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ContextDescription;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.DruckerSensor;
-import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Kalender;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.PhysicalSensor;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.VirtualSensor;
 
 public class OfficeActivity extends BaseActivity {
 
@@ -120,6 +121,20 @@ public class OfficeActivity extends BaseActivity {
         return R.id.navigation_notifications;
     }
 
+    @Override
+    public void handleSensorRecalls(PhysicalSensor physicalSensor) {
+
+    }
+
+    @Override
+    public void handleSensorRecalls(ComputedSensor computedSensor) {
+
+    }
+
+    @Override
+    public void handleSensorRecalls(VirtualSensor virtualSensor) {
+
+    }
 
     // Firebase Listener // check for default value
     ValueEventListener myValueEventListener = new ValueEventListener() {

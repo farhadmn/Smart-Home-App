@@ -17,7 +17,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.Alarmanlage;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ComputedSensor;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.PhysicalSensor;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.TV;
+import de.design_muc.SmartHome.SenSoModClasses.Sensoren.VirtualSensor;
 
 public class HomeActivity extends BaseActivity {
 
@@ -246,7 +249,20 @@ public class HomeActivity extends BaseActivity {
         return R.id.navigation_home;
     }
 
+    @Override
+    public void handleSensorRecalls(PhysicalSensor physicalSensor) {
 
+    }
+
+    @Override
+    public void handleSensorRecalls(ComputedSensor computedSensor) {
+
+    }
+
+    @Override
+    public void handleSensorRecalls(VirtualSensor virtualSensor) {
+
+    }
 
     //Heizung Change Listener
 
