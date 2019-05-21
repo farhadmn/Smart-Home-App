@@ -4,11 +4,14 @@ import android.app.Activity;
 
 import java.text.DecimalFormat;
 
+import de.design_muc.SmartHome.R;
+
 public class ClothRecommendation extends ComputedSensor {
 
     private WeatherSensor myWeatherSensor;
     private String recommendation;
     private boolean status;
+    private Activity activity;
 
     private static ClothRecommendation instance = null;
 
@@ -18,26 +21,28 @@ public class ClothRecommendation extends ComputedSensor {
         this.recommendation = recommendation;
         this.status = status;
         this.myWeatherSensor = WeatherSensor.getInstance();
+        this.activity = activity;
     }
 
     public void decisionLogic() {
         DecimalFormat decimalFormat = new DecimalFormat("#");
         String temperature = decimalFormat.format(myWeatherSensor.getTemp());
         if ("Rain".equals(myWeatherSensor.getWeather()) || "Mist".equals(myWeatherSensor.getWeather()) || "Drizzel".equals(myWeatherSensor.getWeather())) {
-            recommendation = "Es regnet oder nieselt und es hat " + temperature + " °C.\nRegenbekleidung wird empfholen";
+            recommendation = this.activity.getString(R.string.clothRecommendationTextRain);
         } else if ("Fog".equals(myWeatherSensor.getWeather())) {
-            recommendation = "Es ist neblig und es hat " + temperature + " °C.\nRegenbekleidung wird empfholen";
+            recommendation = this.activity.getString(R.string.clothRecommendationTextFog);
         } else if ("Clouds".equals(myWeatherSensor.getWeather())) {
-            recommendation = "Es ist bewölkt und es hat " + temperature + " °C.\nÜbergangskleidung wird empfohlen.";
+            recommendation = this.activity.getString(R.string.clothRecommendationTextClouds);
         } else if ("Snow".equals(myWeatherSensor.getWeather()) || myWeatherSensor.getTemp() <= 5.0) {
-            recommendation = "Es schneit und es hat " + temperature + " °C.\nWinterbekleidung wird empfholen.";
+            recommendation = this.activity.getString(R.string.clothRecommendationTextSnow);
         } else if (myWeatherSensor.getTemp() <= 20.0) {
-            recommendation = "Es ist klarer Himmel und es hat " + temperature + " °C.\nÜbergangskleidung wird empfohlen.";
+            recommendation = this.activity.getString(R.string.clothRecommendationTextBelow20Degree);
         } else if (myWeatherSensor.getTemp() > 20.0) {
-            recommendation = "Es ist klarer Himmel und es hat " + temperature + " °C.\nSommerbekleidung wird empfohlen";
+            recommendation = this.activity.getString(R.string.clothRecommendationTextOver20Degree);
         } else {
-            recommendation = "Leider ist gerade kein Vorschlag möglicht. Bitte schau aus dem Fenster.";
+            recommendation = this.activity.getString(R.string.clothRecommendationTextDefault);
         }
+        recommendation = recommendation.replace("X", temperature);
     }
 
     public static ClothRecommendation getInstance(Activity activity) {

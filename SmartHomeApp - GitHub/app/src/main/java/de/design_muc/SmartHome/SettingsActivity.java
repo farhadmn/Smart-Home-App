@@ -158,7 +158,7 @@ public class SettingsActivity extends AppCompatActivity  implements BottomNaviga
         if (id == R.id.logout) {
             signOut();
         } else if (id == R.id.todoliste) {
-            startActivity(new Intent(this, TodoListeActivity.class));
+            startActivity(new Intent(this, TodoListActivity.class));
         } else if (id == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }

@@ -1,17 +1,59 @@
 <resources>
     <string name="app_name">SmartHome</string>
-    <string name="title_home">Wohnzimmer</string>
-    <string name="title_dashboard">Schlafzimmer</string>
-    <string name="title_notifications">Büro</string>
+    <string name="title_home">Living Room</string>
+    <string name="title_dashboard">Bedroom</string>
+    <string name="title_notifications">Office</string>
     <string name="title_activity_login">Sign in</string>
 
     <string name="auth_failed">User signIn failed because of:</string>
     <string name="minimum_password">Password to short.</string>
 
-    <string name="defaultwertmsg"> Bitte die Standardeinstellungen über die Webinterface einstellen.</string>
+    <string name="defaultwertmsg">Please reset the webinterface to the default settings.</string>
 
     <string name="open_weather_maps_app_id">3b957f8df707db0bc68ab9171c70a995</string>
-    <string name="outfit_recommendation_off_text">Kein Outfitvorschlag möglich! \n Schalten Sie den Outfitvorschlag ein.</string>
+    <string name="outfit_recommendation_off_text">No cloth recommendation available! \n Please turn on the recommendation.</string>
+    <string name="heater">Heater</string>
+    <string name="livingRoomTitle">Living Room</string>
+    <string name="switchTextAlarmSystem">Off</string>
+    <string name="textAlarmSystem">Alarm System</string>
+    <string name="TextTv">TV</string>
+    <string name="switchTextOff">Off</string>
+    <string name="switchTextOn">On</string>
+    <string name="sleepingRoomTitle">Bedroom</string>
+    <string name="office">Office</string>
+    <string name="TextViewAlarmSystem">Alarm System</string>
+    <string name="TextViewClothRecommendation">Cloth recommendation is:</string>
+    <string name="TextViewSwitchClothRecommendation">Cloth Recommendation</string>
+    <string name="TextViewjalousien">Jolousie</string>
+    <string name="light">Light</string>
+    <string name="calendar">Calendar</string>
+    <string name="textViewPrinterState">Printer State</string>
+    <string name="clothRecommendationErrorText">Cloth recommendation not possible.</string>
+    <string name="textViewPrinterStateNormal">Ready/no work to do</string>
+    <string name="textViewPrinterStatePaperEmpty">Paper combartment is empty!</string>
+    <string name="textViewPrinterStateTonerEmpty">Toner cartridge is empty!</string>
+    <string name="settings">Settings</string>
+    <string name="textViewSettingsLivingRoom">Living Room</string>
+    <string name="textViewSettingsOffice">Office</string>
+    <string name="textViewSettingsReset">Reset to default values</string>
+    <string name="textViewSettingsSleepingRoom">Bedoom</string>
+    <string name="officePrinterCartrigeToDo">Please replace or order a cartridge!</string>
+    <string name="officePrinterPaperToDo">Please insert paper or order new paper!</string>
+    <string name="activityChangeDialog">Room \'X\' recognized. Do you want to change to this room view?</string>
+    <string name="dialogOptionNo">No</string>
+    <string name="dialogOptionYes">Yes</string>
+    <string name="signOutDialogEmptyUser">No user is logged in.</string>
+    <string name="signOutDialogSuccess">Log out was successful!</string>
+    <string name="settingDeleteEntryDialog">Do you really want to delete entry: \'X\'?</string>
+    <string name="clothRecommendationTextSnow">It\'s snowing and it\'s X°C. Winter clothing is recommended.</string>
+    <string name="clothRecommendationTextBelow20Degree">It\'s sunny and it\'s X°C. Spring clothing is recommended.</string>
+    <string name="clothRecommendationTextDefault">Unfortunately, no proposal is possible. It\'s X°C</string>
+    <string name="clothRecommendationTextFog">It\'s foggy and it\'s X°C. Rainwear is recommended</string>
+    <string name="clothRecommendationTextOver20Degree">It\'s sunny and it\'s X°C. Summer clothing is recommended.</string>
+    <string name="clothRecommendationTextRain">It\'s raining or drizzling and it\'s X°C. Rainwear is recommended.</string>
+    <string name="clothRecommendationTextClouds">It is cloudy and it\'s X°C. Spring clothing is recommended.</string>
+    <string name="signOut">Sign out</string>
+    <string name="textToDoList">To-Do-List</string>
 
 
 </resources>

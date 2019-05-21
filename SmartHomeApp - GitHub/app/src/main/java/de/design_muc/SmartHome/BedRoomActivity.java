@@ -83,7 +83,7 @@ public class BedRoomActivity extends BaseActivity {
             if (recommendation != null) {
                 recommendationTextView.setText(recommendation);
             } else {
-                recommendationTextView.setText("Outfitvorschlag  nicht möglich.");
+                recommendationTextView.setText(R.string.clothRecommendationErrorText);
             }
         } else {
             recommendationTextView.setText(R.string.outfit_recommendation_off_text);
@@ -111,13 +111,13 @@ public class BedRoomActivity extends BaseActivity {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             recommendationTextView.setText("");
             if(isChecked) {
-                swichtOutfit.setText("An");
+                swichtOutfit.setText(R.string.switchTextOn);
                 myClothRecommendation.setStatus(true);
                 myRef.child("schlafzimmer").child("schlafzimmer_bekleidung").setValue(true);
                 WeatherSensor.getInstance().getWetterValueAPI(BedRoomActivity.this);
 
             } else {
-                swichtOutfit.setText("Aus");
+                swichtOutfit.setText(R.string.switchTextOff);
                 myClothRecommendation.setStatus(false);
                 myRef.child("schlafzimmer").child("schlafzimmer_bekleidung").setValue(false);
                 recommendationTextView.setText(R.string.outfit_recommendation_off_text);
@@ -153,11 +153,11 @@ public class BedRoomActivity extends BaseActivity {
             // TODO Auto-generated method stub
             if(isChecked)
             {
-                switchAlarm.setText("An");
+                switchAlarm.setText(R.string.switchTextOn);
                 myAlarmSystem.setStatus(true);
                 myRef.child("Global_values").child("alarmanlage").setValue(true);
             } else {
-                switchAlarm.setText("Aus");
+                switchAlarm.setText(R.string.switchTextOff);
                 myAlarmSystem.setStatus(false);
                 myRef.child("Global_values").child("alarmanlage").setValue(false);
 
@@ -192,12 +192,12 @@ public class BedRoomActivity extends BaseActivity {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             // TODO Auto-generated method stub
             if(isChecked) {
-                switchLight.setText("An");
+                switchLight.setText(R.string.switchTextOn);
                 myLight.setStatus(true);
                 myRef.child("schlafzimmer").child("licht").setValue(true);
 
             } else {
-                switchLight.setText("Aus");
+                switchLight.setText(R.string.switchTextOff);
                 myLight.setStatus(false);
                 myRef.child("schlafzimmer").child("licht").setValue(false);
             }

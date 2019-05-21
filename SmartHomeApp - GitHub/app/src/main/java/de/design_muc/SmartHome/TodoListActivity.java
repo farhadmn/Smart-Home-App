@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.ContextDescription;
 import de.design_muc.SmartHome.SenSoModClasses.Sensoren.DruckerSensor;
 
-public class TodoListeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class TodoListActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth auth;
     private ArrayList<String> TodoList;
@@ -37,7 +37,7 @@ public class TodoListeActivity extends AppCompatActivity implements BottomNaviga
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_todo_liste);
+        setContentView(R.layout.activity_todo_list);
         myContextDescription = ContextDescription.getInstance();
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
@@ -54,23 +54,23 @@ public class TodoListeActivity extends AppCompatActivity implements BottomNaviga
         TodoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-                deleteEintrag(pos);
+                deleteEntry(pos);
                 return true;
             }
         });
     }
 
-    public void deleteEintrag(final int pos) {
+    public void deleteEntry(final int pos) {
 
         String name;
-        name = TodoList.get(pos);
+        name = getString(R.string.settingDeleteEntryDialog);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        builder.setMessage("Wollen Sie diesen Eintrag:  " + name + " wirklich löschen?");
+        builder.setMessage(name.replace("X", TodoList.get(pos)));
 
-        builder.setNegativeButton("Nein", (dialogInterface, i) -> dialogInterface.cancel());
+        builder.setNegativeButton(R.string.dialogOptionNo, (dialogInterface, i) -> dialogInterface.cancel());
 
-        builder.setPositiveButton("Ja", (dialogInterface, i) -> {
+        builder.setPositiveButton(R.string.dialogOptionYes, (dialogInterface, i) -> {
             myContextDescription.deleteEintrag(pos);
             TodoListView.setAdapter(adapter);
             myDrucker.setStatusDrucker("normal");
@@ -93,7 +93,7 @@ public class TodoListeActivity extends AppCompatActivity implements BottomNaviga
         if (id == R.id.logout) {
             signOut();
         } else if (id == R.id.todoliste) {
-            startActivity(new Intent(this, TodoListeActivity.class));
+            startActivity(new Intent(this, TodoListActivity.class));
         } else if (id == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }

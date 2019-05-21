@@ -45,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     private FirebaseAuth auth;
     String name;
     boolean gotoMenu;
-    String raum;
+    String room;
     boolean alreadyExecuted;
 
     private Dialog changeRoomDialog;
@@ -171,13 +171,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     public void roomDetected(int nr) {
         if (changeRoomDialog == null || !changeRoomDialog.isShowing()) {
             if (nr == 8 && !this.getClass().getSimpleName().equals("HomeActivity")) {
-                raum = "Wohnzimmer";
+                room = getString(R.string.livingRoomTitle);
                 showChangeRoomActivityDialog();
             } else if (nr == 7 && !this.getClass().getSimpleName().equals("BedRoomActivity")) {
-                raum = "Schlafzimmer";
+                room = getString(R.string.sleepingRoomTitle);
                 showChangeRoomActivityDialog();
             } else if (nr == 5 && !this.getClass().getSimpleName().equals("OfficeActivity")) {
-                raum = "Büro";
+                room = getString(R.string.office);
                 showChangeRoomActivityDialog();
             }
         }
@@ -186,19 +186,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     private void showChangeRoomActivityDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String text = getString(R.string.activityChangeDialog);
         builder.setCancelable(true);
-        builder.setMessage("Raum '" + raum + "' erkannt. Wollen Sie zu dieser Raumansicht wechseln?");
+        builder.setMessage(text.replace("X", room ));
 
-        builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialogOptionNo, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();
             }
         });
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.dialogOptionYes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                setActivity(raum);
+                setActivity(room);
 
             }
         });
@@ -207,17 +208,17 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     public void setActivity(String IbeaconName) {
 
-        if (IbeaconName.equals("Wohnzimmer")) {
+        if (IbeaconName.equals(getString(R.string.livingRoomTitle))) {
             if (this.getClass().getSimpleName().equals("HomeActivity")) {
                 return;
             }
             startActivity(new Intent(this, HomeActivity.class));
-        } else if (IbeaconName.equals("Schlafzimmer")) {
+        } else if (IbeaconName.equals(R.string.livingRoomTitle)) {
             if (this.getClass().getSimpleName().equals("BedRoomActivity")) {
                 return;
             }
             startActivity(new Intent(this, BedRoomActivity.class));
-        } else if (IbeaconName.equals("Büro")) {
+        } else if (IbeaconName.equals(getString(R.string.office))) {
             if (this.getClass().getSimpleName().equals("OfficeActivity")) {
                 return;
             }
@@ -239,7 +240,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         if (id == R.id.logout) {
             signOut();
         } else if (id == R.id.todoliste) {
-            startActivity(new Intent(this, TodoListeActivity.class));
+            startActivity(new Intent(this, TodoListActivity.class));
         } else if (id == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
@@ -302,13 +303,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     public void signOut() {
         auth.getCurrentUser();
         if (auth.getCurrentUser() == null) {
-            Toast.makeText(getApplicationContext(), "Kein Benutzer ist eingeloggt.",
+            Toast.makeText(getApplicationContext(), R.string.signOutDialogEmptyUser,
                     Toast.LENGTH_SHORT).show();
             return;
         }
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(this, LoginActivity.class));
-        Toast.makeText(getApplicationContext(), "Sie wurden erfolgreich abgemeldet!",
+        Toast.makeText(getApplicationContext(), R.string.signOutDialogSuccess,
                 Toast.LENGTH_SHORT).show();
         finish();
     }

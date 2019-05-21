@@ -68,7 +68,7 @@ public class OfficeActivity extends BaseActivity {
         mycalander = new Calendar();
         Map<String, List<String>> appointments = mycalander.readCalendarEvent(this);
         for(Map.Entry<String, List<String>> entry: appointments.entrySet()) {
-            termine.add(entry.getValue().get(TITLE) + " von " + entry.getValue().get(START_DATE) + " bis " + entry.getValue().get(END_DATE));
+            termine.add(entry.getValue().get(TITLE) + " from " + entry.getValue().get(START_DATE) + " to " + entry.getValue().get(END_DATE));
         }
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.termine);
@@ -88,20 +88,20 @@ public class OfficeActivity extends BaseActivity {
             // Toast.makeText(getApplicationContext(), "You pressed Test." +sDB, Toast.LENGTH_LONG).show();
 
             if (myDrucker.getStatusDrucker().equals("normal")) {
-                druckerStatusTextV.setText("normal");
+                druckerStatusTextV.setText(R.string.textViewPrinterStateNormal);
                 druckerStatusTextV.setTextColor(Color.parseColor("#33cc33"));
 
             } else if (myDrucker.getStatusDrucker().equals("Papierleer")) {
-                druckerStatusTextV.setText("Papier ist leer");
+                druckerStatusTextV.setText(R.string.textViewPrinterStatePaperEmpty);
                 druckerStatusTextV.setTextColor(Color.parseColor("#ff4000"));
-                myContextDescription.setTodo("Biite Papier einlegen bzw. nachbestellen");
+                myContextDescription.setTodo(getString(R.string.officePrinterPaperToDo));
             } else if (myDrucker.getStatusDrucker().equals("tonerleer")) {
-                druckerStatusTextV.setText("Toner ist Leer.");
+                druckerStatusTextV.setText(R.string.textViewPrinterStateTonerEmpty);
                 druckerStatusTextV.setTextColor(Color.parseColor("#ff4000"));
-                myContextDescription.setTodo("Biite Toner nachbestellen");
-                String test;
-                test = myContextDescription.getTodo(0);
-                Toast.makeText(getApplicationContext(), "You pressed Test." + test, Toast.LENGTH_LONG).show();
+                myContextDescription.setTodo(getString(R.string.officePrinterCartrigeToDo));
+                String toastText;
+                toastText = myContextDescription.getTodo(0);
+                Toast.makeText(getApplicationContext(),toastText + " added to ToDo-List.", Toast.LENGTH_LONG).show();
             }
         }
 

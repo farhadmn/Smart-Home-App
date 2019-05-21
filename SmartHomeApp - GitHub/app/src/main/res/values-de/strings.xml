@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="office">Büro</string>
+    <string name="sleepingRoomTitle">Schlafzimmer</string>
+    <string name="light">Licht</string>
+    <string name="TextViewjalousien">Jalousie</string>
+    <string name="TextViewAlarmSystem">Alarmanlage</string>
+    <string name="TextViewSwitchClothRecommendation">Bekleidungsvorschlag</string>
+    <string name="TextViewClothRecommendation">Outfitvorschlag:</string>
+    <string name="textViewPrinterState">Druckerstatus</string>
+    <string name="calendar">Terminkalender</string>
+    <string name="clothRecommendationErrorText">Outfitvorschlag nicht möglich.</string>
+    <string name="textViewPrinterStateNormal">Bereit/keine Wartungsarbeit</string>
+    <string name="textViewPrinterStatePaperEmpty">Papierfach ist leer!</string>
+    <string name="textViewPrinterStateTonerEmpty">Tonerkartusche ist leer!</string>
+    <string name="settings">Einstellungen</string>
+    <string name="textViewSettingsSleepingRoom">Schlafzimmer</string>
+    <string name="textViewSettingsLivingRoom">Wohnzimmer</string>
+    <string name="textViewSettingsOffice">Büro</string>
+    <string name="textViewSettingsReset">Default-Werte zurücksetzen</string>
+    <string name="officePrinterCartrigeToDo">Bitte Toner wechseln oder nachbestellen!</string>
+    <string name="officePrinterPaperToDo">Bitte Papier einlegen oder nachbestellen!</string>
+    <string name="activityChangeDialog">Raum \'X\' erkannt. Wollen Sie zu dieser Raumansicht wechseln?</string>
+    <string name="dialogOptionNo">Nein</string>
+    <string name="dialogOptionYes">Ja</string>
+    <string name="signOutDialogEmptyUser">Kein Benutzer ist eingeloggt.</string>
+    <string name="signOutDialogSuccess">Sie wurden erfolgreich abgemeldet!</string>
+    <string name="settingDeleteEntryDialog">Wollen Sie diesen Eintrag: \'X\' wirklich löschen?</string>
+    <string name="clothRecommendationTextRain">Es regnet oder nieselt und es hat X°C. Regenbekleidung wird empfholen</string>
+    <string name="clothRecommendationTextFog">Es ist neblig und es hat X°C. Regenbekleidung wird empfholen</string>
+    <string name="clothRecommendationTextBelow20Degree">Es ist heiter und es hat X°C. Übergangskleidung wird empfohlen.</string>
+    <string name="clothRecommendationTextOver20Degree">Es ist klarer Himmel und es hat X°C. Sommerbekleidung wird empfohlen</string>
+    <string name="clothRecommendationTextDefault">Leider ist gerade kein Vorschlag möglicht. Es hat X°C.</string>
+    <string name="clothRecommendationTextClouds">Es ist bewölkt und es hat X°C. Übergangskleidung wird empfohlen.</string>
+    <string name="clothRecommendationTextSnow">Es schneit und es hat X°C. Winterbekleidung wird empfholen.</string>
+    <string name="signOut">Abmelden</string>
+    <string name="textToDoList">To-do-Liste</string>
+</resources>

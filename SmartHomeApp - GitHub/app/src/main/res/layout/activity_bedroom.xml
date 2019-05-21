@@ -22,7 +22,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="Schlafzimmer"
+        android:text="@string/sleepingRoomTitle"
         android:textSize="18sp" />
 
     <include
@@ -43,7 +43,7 @@
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
         android:layout_marginTop="98dp"
-        android:text="Licht" />
+        android:text="@string/light" />
 
     <Switch
         android:id="@+id/switch3"
@@ -55,7 +55,7 @@
         android:layout_marginEnd="62dp"
         android:layout_marginRight="62dp"
         android:layout_marginBottom="-3dp"
-        android:text="Aus" />
+        android:text="@string/switchTextOn" />
 
     <TextView
         android:id="@+id/textView10"
@@ -65,7 +65,7 @@
         android:layout_alignStart="@+id/textView"
         android:layout_marginStart="-1dp"
         android:layout_marginTop="37dp"
-        android:text="Jalousien"
+        android:text="@string/TextViewjalousien"
         android:layout_alignLeft="@+id/textView"
         android:layout_marginLeft="-1dp" />
 
@@ -94,7 +94,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginLeft="68dp"
         android:layout_marginTop="30dp"
-        android:text="Alarmanlage" />
+        android:text="@string/TextViewAlarmSystem" />
 
     <Switch
         android:id="@+id/switch6"
@@ -110,7 +110,7 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:layout_marginBottom="-4dp"
-        android:text="Aus"
+        android:text="@string/switchTextOff"
         android:layout_marginLeft="70dp"
         android:layout_alignLeft="@+id/seekBar6" />
 
@@ -121,7 +121,7 @@
         android:layout_below="@+id/textView11"
         android:layout_alignStart="@+id/textView"
         android:layout_marginTop="26dp"
-        android:text="Bekleidungsvorschlag"
+        android:text="@string/TextViewSwitchClothRecommendation"
         android:layout_alignLeft="@+id/textView" />
 
     <Switch
@@ -134,7 +134,7 @@
         android:layout_marginTop="17dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
-        android:text="Aus" />
+        android:text="@string/switchTextOff" />
 
     <TextView
         android:id="@+id/textView13"
@@ -145,7 +145,7 @@
         android:layout_marginRight="60dp"
         android:layout_marginLeft="68dp"
         android:gravity="center"
-        android:text="TextView"
+        android:text=""
         android:textSize="16sp" />
 
     <TextView
@@ -167,7 +167,7 @@
         android:layout_below="@+id/switch7"
         android:layout_marginTop="33dp"
         android:gravity="center"
-        android:text="Outfitvorschlag:"
+        android:text="@string/TextViewClothRecommendation"
         android:textSize="16sp" />
 
 </RelativeLayout>

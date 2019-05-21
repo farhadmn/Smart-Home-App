@@ -22,7 +22,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="Büro"
+        android:text="@string/office"
         android:textSize="18sp" />
 
     <include
@@ -43,7 +43,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginLeft="64dp"
         android:layout_marginTop="60dp"
-        android:text="Druckerstatus" />
+        android:text="@string/textViewPrinterState" />
 
     <TextView
         android:id="@+id/druckerstatus"
@@ -59,32 +59,7 @@
         android:layout_marginBottom="0dp"
         android:layout_toEndOf="@+id/DruckerstatusTextView"
         android:layout_toRightOf="@+id/DruckerstatusTextView"
-        android:text="TextView" />
-
-    <!--<TextView-->
-        <!--android:id="@+id/textView14"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/DruckerstatusTextView"-->
-        <!--android:layout_alignStart="@+id/DruckerstatusTextView"-->
-        <!--android:layout_marginTop="33dp"-->
-        <!--android:text="Arbeitszeiterfassung" />-->
-
-    <!--<Spinner-->
-        <!--android:id="@+id/spinner"-->
-        <!--android:layout_width="101dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/druckerstatus"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginStart="32dp"-->
-        <!--android:layout_marginLeft="32dp"-->
-        <!--android:layout_marginTop="32dp"-->
-        <!--android:layout_marginEnd="58dp"-->
-        <!--android:layout_marginRight="58dp"-->
-
-        <!--android:layout_toEndOf="@+id/textView14"-->
-        <!--android:layout_toRightOf="@+id/textView14" />-->
+        android:text="" />
 
     <TextView
         android:id="@+id/textView15"
@@ -94,7 +69,7 @@
         android:layout_alignStart="@+id/DruckerstatusTextView"
         android:layout_marginStart="-2dp"
         android:layout_marginTop="33dp"
-        android:text="Terminkalender" />
+        android:text="@string/calendar" />
 
     <ListView
         android:id="@+id/calListView"

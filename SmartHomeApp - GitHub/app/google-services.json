@@ -1,0 +1,72 @@
+{
+  "project_info": {
+    "project_number": "1086709642136",
+    "firebase_url": "https://sensomodapp-38f82.firebaseio.com",
+    "project_id": "sensomodapp-38f82",
+    "storage_bucket": "sensomodapp-38f82.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086709642136:android:27268a7f4a016cd1",
+        "android_client_info": {
+          "package_name": "de.design_muc.SmartHome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1086709642136-056b402h1qnusfdl67au0ci4c11ogdr8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.design_muc.SmartHome",
+            "certificate_hash": "4a629a7ac848bd0b6cb6af3c360b12318f3e672e"
+          }
+        },
+        {
+          "client_id": "1086709642136-rnei16q9f0jld10fb54uhar8sacdaell.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.design_muc.SmartHome",
+            "certificate_hash": "e7ad451a03bcf9753b1335774026747c4a11601b"
+          }
+        },
+        {
+          "client_id": "1086709642136-dih4d9v581i50en8ojo3vi2fdhkvvtgj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.design_muc.SmartHome",
+            "certificate_hash": "9525f782aa5ed1e03bc466b2cb85a2872ee69dda"
+          }
+        },
+        {
+          "client_id": "1086709642136-1keqhrgpkeus25evb1lqpmjqogjnjrnb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.design_muc.SmartHome",
+            "certificate_hash": "1953e892535cc45006223ca76fba24abf9cdef96"
+          }
+        },
+        {
+          "client_id": "1086709642136-q4j511h16svifqsvjp8sjbg596si7rau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXSFf3xsZKSifl1HNG8uvRsSPnmwJKTjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1086709642136-q4j511h16svifqsvjp8sjbg596si7rau.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

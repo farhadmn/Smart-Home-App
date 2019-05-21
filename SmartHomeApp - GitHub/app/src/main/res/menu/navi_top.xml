@@ -5,14 +5,14 @@
     <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
-        android:title="Abmelden"
+        android:title="@string/signOut"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/settings"
-        android:title="Einstellungen"
+        android:title="@string/settings"
         app:showAsAction="never" />
     <item
         android:id="@+id/todoliste"
-        android:title="To-do-Liste"
+        android:title="@string/textToDoList"
         app:showAsAction="never" />
 </menu>
